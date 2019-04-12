@@ -3,8 +3,11 @@ package Main;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
+import java.util.ResourceBundle;
 
 public class Main extends Application{
     public static void main(String args[]){
@@ -13,10 +16,12 @@ public class Main extends Application{
 
 
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/Window.fxml"));
-        BorderPane borderPane = loader.load();
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("messages");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Window.fxml"));
+        loader.setResources(resourceBundle);
+        TabPane tabPane = loader.load();
 
-        Scene scene = new Scene(borderPane);
+        Scene scene = new Scene(tabPane);
 
         primaryStage.setScene(scene);
         primaryStage.show();
