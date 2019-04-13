@@ -6,10 +6,41 @@
 }
 
 .tab-pane *.tab-header-background {
-    -fx-background-color: -fx-outer-border, -fx-inner-border, derive(-fx-color, -100%);
-    -fx-effect: innershadow(two-pass-box , rgba(0,0,0,0.6) , 4, 0.0 , 0 , 0);
+    -fx-background-color: transparent;
 }
 
 .button_reflex{
     -fx-shape: "M 200 150 C 250 200 250 200 300 200 L 550 200 C 600 200 625 175 650 150 C 600 200 650 200 600 250 C 650 300 600 300 650 350 C 600 300 600 300 550 300 L 300 300 C 250 300 250 300 200 350 C 250 300 200 300 250 250 C 200 200 250 200 200 150 Z";
+    -fx-background-color: radial-gradient(focus-angle 360deg, focus-distance 0%, center 50% 50%, radius 70%, reflect, lightblue, aqua 30%, blue);
+}
+
+.tab_reflex{
+    -fx-pref-width: 100;
+    -fx-pref-height: 50;
+    -fx-shape: "M 520 240 L 620 190 L 570 280 L 220 280 L 160 190 L 260 240 L 210 130 L 260 190 L 320 110 L 320 170 L 390 80 L 460 170 L 460 110 L 520 190 L 580 130 Z";
+    -fx-background-color: radial-gradient(focus-angle 360deg, focus-distance 0%, center 50% 100%, radius 100%, reflect, lightblue, aqua 30%, blue);
+}
+
+.button_precision{
+    -fx-shape: "M 400 300 L 250 300 C 250 200 325 150 400 150 L 400 300 L 425 300 L 425 150 C 500 150 575 225 575 300 L 425 300 L 425 325 L 575 325 C 575 400 500 475 425 475 L 425 325 L 400 325 L 400 475 C 325 475 250 400 250 325 L 400 325 L 400 300 C 350 300 350 300 250 300 L 175 300 L 175 325 L 250 325 L 250 300 L 400 150 L 425 150 L 425 75 L 400 75 L 400 150 L 400 475 L 400 550 L 425 550 L 425 475 L 400 475 L 400 325 L 650 325 L 650 300 L 575 300 L 575 325 L 400 325 ";
+    -fx-background-color: radial-gradient(focus-angle 360deg, focus-distance 0%, center 50% 50%, radius 70%, reflect, darkgreen, greenyellow 40%, lawngreen);
+}
+
+.tab_precision{
+    -fx-pref-width: 100;
+    -fx-pref-height: 50;
+    -fx-shape: "M 400 300 L 250 300 C 250 200 325 150 400 150 L 400 300 L 425 300 L 425 150 C 500 150 575 225 575 300 L 425 300 L 425 325 L 575 325 L 425 325 L 400 325 C 250 325 400 325 250 325 L 400 325 L 400 300 C 350 300 350 300 250 300 L 175 300 L 175 325 L 250 325 L 250 300 L 400 150 L 425 150 L 425 75 L 400 75 L 400 150 L 400 325 L 650 325 L 650 300 L 575 300 L 575 325 L 400 325";
+    -fx-background-color: radial-gradient(focus-angle 360deg, focus-distance 0%, center 50% 100%, radius 70%, reflect, darkgreen, greenyellow 40%, lawngreen);
+}
+
+.button_speed{
+    -fx-shape: "M 220 210 C 250 250 260 210 280 280 C 340 270 260 190 310 170 C 280 210 330 190 350 280 C 330 250 400 170 350 160 C 400 150 370 270 410 280 C 440 260 400 210 460 170 C 440 240 490 210 480 280 C 520 270 490 240 560 210 C 480 300 560 340 510 360 C 470 390 320 390 270 360 C 200 340 260 270 220 210 Z";
+    -fx-background-color: radial-gradient(focus-angle 360deg, focus-distance 0%, center 50% 100%, radius 70%, reflect, red, orange 50%, yellow);
+}
+
+.tab_speed{
+    -fx-pref-width: 100;
+    -fx-pref-height: 50;
+    -fx-shape: "M 220 200 C 280 220 230 230 280 250 C 340 260 270 210 300 170 C 290 210 330 190 360 250 C 340 230 400 170 340 150 C 400 150 390 230 410 240 C 440 220 410 190 480 160 C 430 190 450 220 470 240 C 480 240 490 190 540 200 C 460 220 540 300 480 320 C 450 320 350 320 270 320 C 220 290 270 210 220 200 Z";
+    -fx-background-color: radial-gradient(focus-angle 360deg, focus-distance 0%, center 50% 100%, radius 70%, reflect, red, orange 50%, yellow);
 }

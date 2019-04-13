@@ -23,6 +23,8 @@ public class Main extends Application{
 
         Scene scene = new Scene(tabPane);
 
+        primaryStage.setMinWidth(1024);
+        primaryStage.setMinHeight(576);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
