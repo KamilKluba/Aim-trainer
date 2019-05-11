@@ -22,7 +22,7 @@ public class Main extends Application{
 
 
     public void start(Stage primaryStage) throws Exception {
-       // Locale.setDefault(new Locale("en"));
+       Locale.setDefault(new Locale("en"));
         ResourceBundle resourceBundle = ResourceBundle.getBundle("messages");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Window.fxml"));
         loader.setResources(resourceBundle);
@@ -31,6 +31,7 @@ public class Main extends Application{
         WindowController controller = loader.getController();
 
         Scene scene = new Scene(tabPane);
+        scene.getStylesheets().add(getClass().getResource("/CSS/Window/Window.css").toExternalForm());
 
         primaryStage.setMinWidth(1024);
         primaryStage.setMinHeight(576);

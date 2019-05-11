@@ -11,6 +11,7 @@
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
+<?language javascript?>
 
 <TabPane blendMode="COLOR_BURN" rotateGraphic="true" style="-fx-background-size: stretch;" styleClass="background_image" stylesheets="@../CSS/Window/Window.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.WindowController">
    <tabs>
@@ -20,21 +21,7 @@
                <children>
                   <HBox fx:id="hBoxReflex1" alignment="CENTER" fillHeight="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="30.0">
                      <children>
-                        <Button fx:id="buttonReflex1" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="%basic_aiming" textAlignment="CENTER">
-                           <font>
-                              <Font name="Bank Gothic Medium BT" size="12.0" />
-                           </font>
-                           <textFill>
-                              <LinearGradient endX="1.0" endY="0.8999999999999999" startX="1.0" startY="0.10952380952380954">
-                                 <stops>
-                                    <Stop color="#e4e000" />
-                                    <Stop color="#e4e000" offset="0.007662835249042145" />
-                                    <Stop color="RED" offset="0.5287356321839081" />
-                                    <Stop color="#e3db00" offset="1.0" />
-                                 </stops>
-                              </LinearGradient>
-                           </textFill>
-                        </Button>
+                        <Button fx:id="buttonReflex1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseEntered="labelReflexModeInfo.text = &quot;%reflex&quot;" onMouseExited="labelReflexModeInfo.text = &quot;halo&quot;" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="%basic_aiming" textAlignment="CENTER" />
                         <Button fx:id="buttonReflex2" alignment="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="Button" />
                         <Button fx:id="buttonReflex3" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="Button" />
                         <Button fx:id="buttonReflex4" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="Button" />
@@ -43,6 +30,7 @@
                         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                      </padding>
                   </HBox>
+                  <Label fx:id="labelReflexModeInfo" text="Label" />
                   <HBox fx:id="hBoxReflex2" alignment="CENTER" fillHeight="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="30.0">
                      <children>
                         <Button fx:id="buttonReflex5" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="Button" />
@@ -89,6 +77,7 @@
                   <LinearGradient endX="1.0" endY="1.0" startX="1.0" startY="0.5380952380952381">
                      <stops>
                         <Stop color="#0077b2f5" />
+                        <Stop color="#0077b2f5" offset="0.007662835249042145" />
                         <Stop color="WHITE" offset="1.0" />
                      </stops>
                   </LinearGradient>
@@ -101,7 +90,7 @@
                   <HBox fx:id="hBoxPrecision1" alignment="CENTER" fillHeight="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="30.0">
                      <children>
                         <Button fx:id="buttonPrecision1" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="Button" />
-                        <Button fx:id="buttonPrecision2" alignment="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="Button" />
+                        <Button fx:id="buttonPrecision2" alignment="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="%basic_precision" />
                         <Button fx:id="buttonPrecision3" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="Button" />
                         <Button fx:id="buttonPrecision4" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="Button" />
                      </children>
@@ -109,6 +98,7 @@
                         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                      </padding>
                   </HBox>
+                  <Label fx:id="labelPrecisionMofdeInfo" text="Label" />
                   <HBox fx:id="hBoxPrecision2" alignment="CENTER" fillHeight="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="30.0">
                      <children>
                         <Button fx:id="buttonPrecision5" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="Button" />
@@ -140,6 +130,7 @@
                   <LinearGradient endX="1.0" endY="1.0" startX="1.0" startY="0.26666666666666666">
                      <stops>
                         <Stop color="#85e81c" />
+                        <Stop color="#85e81c" offset="0.007662835249042145" />
                         <Stop color="#09250a" offset="1.0" />
                      </stops>
                   </LinearGradient>
@@ -160,6 +151,7 @@
                         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                      </padding>
                   </HBox>
+                  <Label fx:id="labelSpeedModeInfo" text="Label" />
                   <HBox fx:id="hBoxSpeed2" alignment="CENTER" fillHeight="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="30.0">
                      <children>
                         <Button fx:id="buttonSpeed5" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_speed" text="Button" />

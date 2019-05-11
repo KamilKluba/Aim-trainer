@@ -1,13 +1,17 @@
 package controllers;
 
+import javafx.collections.ObservableList;
+import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class WindowController {
 
@@ -16,6 +20,7 @@ public class WindowController {
     private ArrayList<Button> arrayListButtons = new ArrayList<>();
     private ArrayList<HBox> arrayListHBoxes = new ArrayList<>();
     private ArrayList<VBox> arrayListVBoxes = new ArrayList<>();
+    private ResourceBundle bundle = ResourceBundle.getBundle("messages");
 
     @FXML
     private Tab tabReflex;
@@ -89,6 +94,10 @@ public class WindowController {
     private HBox hBoxSpeed2;
     @FXML
     private VBox vBoxSpeed;
+    @FXML
+    private Label labelReflexModeInfo;
+
+    int halo1 = 0, halo2 = 0;
 
 
     public void initialize(){
@@ -127,12 +136,26 @@ public class WindowController {
         arrayListHBoxes.add(hBoxSpeed1);
         arrayListHBoxes.add(hBoxSpeed2);
         arrayListVBoxes.add(vBoxSpeed);
+
+        //buttonReflex1.getStylesheets().add("/CSS/Window/Window.css");
     }
 
     public void resizeButtons(double windowWidth, double windowHeight) {
-        for(Button b : arrayListButtons) b.setPrefSize(windowWidth / defaultWidth * 200,  windowHeight / defaultHeight * 100);
-        buttonReflex1.setFont(new Font("Bank Gothic Medium BT", 5 + (windowHeight + windowWidth) / 150));
+        for(Button b : arrayListButtons) {
+            b.setPrefSize(windowWidth / defaultWidth * 200, windowHeight / defaultHeight * 100);
+            b.setFont(new Font("Bank Gothic Medium BT", 5 + (windowHeight + windowWidth) / 150));
+        }
 
         for(HBox h : arrayListHBoxes)h.setSpacing((windowWidth - defaultWidth) / 21 + 30);
+    }
+
+
+
+    public void actionEntered() {
+        labelReflexModeInfo.setText(bundle.getString("precision"));
+    }
+
+    public void actionExited(){
+        labelReflexModeInfo.setText(bundle.getString("speed"));
     }
 }
