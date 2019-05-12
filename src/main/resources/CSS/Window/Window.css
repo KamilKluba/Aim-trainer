@@ -47,7 +47,7 @@
     -fx-background-color3: darkgreen;
     -fx-shape: "M 400 300 L 250 300 C 250 200 325 150 400 150 L 400 300 L 425 300 L 425 150 C 500 150 575 225 575 300 L 425 300 L 425 325 L 575 325 C 575 400 500 475 425 475 L 425 325 L 400 325 L 400 475 C 325 475 250 400 250 325 L 400 325 L 400 300 C 350 300 350 300 250 300 L 175 300 L 175 325 L -50 325 L 175 325 L 250 325 L 250 300 L 400 150 L 425 150 L 425 75 L 400 75 L 400 150 L 400 475 L 400 550 L 425 550 L 425 475 L 400 475 L 400 325 L 650 325 L 875 325 L 650 325  L 650 300 L 575 300 L 575 325 L 400 325 ";
     -fx-background-color: radial-gradient(focus-angle 360deg, focus-distance 0%, center 50% 50%, radius 40%, reflect, -fx-background-color1, -fx-background-color2 40%, -fx-background-color3 80%);
-    -fx-text-fill: linear-gradient(dodgerblue 0%, deepskyblue 33%, aqua 66%, white 100%);
+    -fx-text-fill: linear-gradient(navy 0%, dodgerblue 33%, deepskyblue 66%, aqua 100%);
 }
 
 .tab_precision{

@@ -22,7 +22,8 @@ public class Main extends Application{
 
 
     public void start(Stage primaryStage) throws Exception {
-       Locale.setDefault(new Locale("en"));
+        //Locale.setDefault(new Locale("en"));
+        System.getProperty("file.encoding", "UTF-8");
         ResourceBundle resourceBundle = ResourceBundle.getBundle("messages");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Window.fxml"));
         loader.setResources(resourceBundle);

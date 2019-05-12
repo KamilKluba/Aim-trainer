@@ -1,11 +1,11 @@
 package controllers;
 
-import javafx.collections.ObservableList;
-import javafx.css.PseudoClass;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -96,6 +96,13 @@ public class WindowController {
     private VBox vBoxSpeed;
     @FXML
     private Label labelReflexModeInfo;
+    @FXML
+    private Label labelPrecisionModeInfo;
+    @FXML
+    private Label labelSpeedModeInfo;
+
+    EventHandler<MouseEvent> eventHandlerSetLabel = event -> setLabelInfo(((Button)event.getSource()).getId());
+    EventHandler<MouseEvent> eventHandlerClearLabel = event -> clearLabelInfo();
 
     int halo1 = 0, halo2 = 0;
 
@@ -137,13 +144,21 @@ public class WindowController {
         arrayListHBoxes.add(hBoxSpeed2);
         arrayListVBoxes.add(vBoxSpeed);
 
-        //buttonReflex1.getStylesheets().add("/CSS/Window/Window.css");
+        for(Button b : arrayListButtons) b.setOnMouseEntered(eventHandlerSetLabel);
+        for(Button b : arrayListButtons) b.setOnMouseExited(eventHandlerClearLabel);
+
+        labelReflexModeInfo.setText("\n\n");
+        labelPrecisionModeInfo.setText("\n\n");
+        labelSpeedModeInfo.setText("\n\n");
     }
 
     public void resizeButtons(double windowWidth, double windowHeight) {
         for(Button b : arrayListButtons) {
             b.setPrefSize(windowWidth / defaultWidth * 200, windowHeight / defaultHeight * 100);
             b.setFont(new Font("Bank Gothic Medium BT", 5 + (windowHeight + windowWidth) / 150));
+            labelReflexModeInfo.setFont(new Font("Bank Gothic Medium BT", 5 + (windowHeight + windowWidth) / 150));
+            labelPrecisionModeInfo.setFont(new Font("Bank Gothic Medium BT", 5 + (windowHeight + windowWidth) / 150));
+            labelSpeedModeInfo.setFont(new Font("Bank Gothic Medium BT", 5 + (windowHeight + windowWidth) / 150));
         }
 
         for(HBox h : arrayListHBoxes)h.setSpacing((windowWidth - defaultWidth) / 21 + 30);
@@ -151,8 +166,43 @@ public class WindowController {
 
 
 
-    public void actionEntered() {
-        labelReflexModeInfo.setText(bundle.getString("precision"));
+    private void setLabelInfo(String buttonType) {
+        if(buttonType.contains("buttonReflexInfo")){
+            if(buttonType.contains("1")) labelReflexModeInfo.setText(bundle.getString("buttonReflex1Info"));
+            else if(buttonType.contains("2")) labelReflexModeInfo.setText(bundle.getString("buttonReflex2Info"));
+            else if(buttonType.contains("3")) labelReflexModeInfo.setText(bundle.getString("buttonReflex3Info"));
+            else if(buttonType.contains("4")) labelReflexModeInfo.setText(bundle.getString("buttonReflex4Info"));
+            else if(buttonType.contains("5")) labelReflexModeInfo.setText(bundle.getString("buttonReflex5Info"));
+            else if(buttonType.contains("6")) labelReflexModeInfo.setText(bundle.getString("buttonReflex6Info"));
+            else if(buttonType.contains("7")) labelReflexModeInfo.setText(bundle.getString("buttonReflex7Info"));
+            else if(buttonType.contains("8")) labelReflexModeInfo.setText(bundle.getString("buttonReflex8Info"));
+        }
+        else if(buttonType.contains("buttonPrecision")){
+            if(buttonType.contains("1")) labelPrecisionModeInfo.setText(bundle.getString("buttonPrecision1Info"));
+            else if(buttonType.contains("2")) labelPrecisionModeInfo.setText(bundle.getString("buttonPrecision2Info"));
+            else if(buttonType.contains("3")) labelPrecisionModeInfo.setText(bundle.getString("buttonPrecision3Info"));
+            else if(buttonType.contains("4")) labelPrecisionModeInfo.setText(bundle.getString("buttonPrecision4Info"));
+            else if(buttonType.contains("5")) labelPrecisionModeInfo.setText(bundle.getString("buttonPrecision5Info"));
+            else if(buttonType.contains("6")) labelPrecisionModeInfo.setText(bundle.getString("buttonPrecision6Info"));
+            else if(buttonType.contains("7")) labelPrecisionModeInfo.setText(bundle.getString("buttonPrecision7Info"));
+            else if(buttonType.contains("8")) labelPrecisionModeInfo.setText(bundle.getString("buttonPrecision8Info"));
+        }
+        else{
+            if(buttonType.contains("1")) labelSpeedModeInfo.setText(bundle.getString("buttonSpeed1Info"));
+            else if(buttonType.contains("2")) labelSpeedModeInfo.setText(bundle.getString("buttonSpeed2Info"));
+            else if(buttonType.contains("3")) labelSpeedModeInfo.setText(bundle.getString("buttonSpeed3Info"));
+            else if(buttonType.contains("4")) labelSpeedModeInfo.setText(bundle.getString("buttonSpeed4Info"));
+            else if(buttonType.contains("5")) labelSpeedModeInfo.setText(bundle.getString("buttonSpeed5Info"));
+            else if(buttonType.contains("6")) labelSpeedModeInfo.setText(bundle.getString("buttonSpeed6Info"));
+            else if(buttonType.contains("7")) labelSpeedModeInfo.setText(bundle.getString("buttonSpeed7Info"));
+            else if(buttonType.contains("8")) labelSpeedModeInfo.setText(bundle.getString("buttonSpeed8Info"));
+        }
+    }
+
+    private void clearLabelInfo(){
+        labelReflexModeInfo.setText("\n\n");
+        labelPrecisionModeInfo.setText("\n\n");
+        labelSpeedModeInfo.setText("\n\n");
     }
 
     public void actionExited(){

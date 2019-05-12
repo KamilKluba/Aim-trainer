@@ -21,22 +21,31 @@
                <children>
                   <HBox fx:id="hBoxReflex1" alignment="CENTER" fillHeight="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="30.0">
                      <children>
-                        <Button fx:id="buttonReflex1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseEntered="labelReflexModeInfo.text = &quot;%reflex&quot;" onMouseExited="labelReflexModeInfo.text = &quot;halo&quot;" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="%basic_aiming" textAlignment="CENTER" />
-                        <Button fx:id="buttonReflex2" alignment="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="Button" />
-                        <Button fx:id="buttonReflex3" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="Button" />
-                        <Button fx:id="buttonReflex4" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="Button" />
+                        <Button fx:id="buttonReflex1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseEntered="labelReflexModeInfo.text = &quot;%reflex&quot;" onMouseExited="labelReflexModeInfo.text = &quot;halo&quot;" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="%buttonReflex1" textAlignment="CENTER" />
+                        <Button fx:id="buttonReflex2" alignment="CENTER" mnemonicParsing="false" onMouseEntered="#actionEntered" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="%buttonReflex2" textAlignment="CENTER" />
+                        <Button fx:id="buttonReflex3" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="%buttonReflex3" textAlignment="CENTER" />
+                        <Button fx:id="buttonReflex4" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="%buttonReflex4" textAlignment="CENTER" />
                      </children>
                      <padding>
                         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                      </padding>
                   </HBox>
-                  <Label fx:id="labelReflexModeInfo" text="Label" />
+                  <Label fx:id="labelReflexModeInfo" text="Label">
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0" startX="1.0">
+                           <stops>
+                              <Stop color="#e4e000" />
+                              <Stop color="#e4e000" offset="0.007662835249042145" />
+                              <Stop color="RED" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </textFill></Label>
                   <HBox fx:id="hBoxReflex2" alignment="CENTER" fillHeight="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="30.0">
                      <children>
-                        <Button fx:id="buttonReflex5" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="Button" />
-                        <Button fx:id="buttonReflex6" alignment="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="Button" />
-                        <Button fx:id="buttonReflex7" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="Button" />
-                        <Button fx:id="buttonReflex8" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="Button" />
+                        <Button fx:id="buttonReflex5" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="%buttonReflex5" textAlignment="CENTER" />
+                        <Button fx:id="buttonReflex6" alignment="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="%buttonReflex6" textAlignment="CENTER" />
+                        <Button fx:id="buttonReflex7" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="%buttonReflex7" textAlignment="CENTER" />
+                        <Button fx:id="buttonReflex8" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_reflex" text="%buttonReflex8" textAlignment="CENTER" />
                      </children>
                      <padding>
                         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
@@ -89,22 +98,31 @@
                <children>
                   <HBox fx:id="hBoxPrecision1" alignment="CENTER" fillHeight="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="30.0">
                      <children>
-                        <Button fx:id="buttonPrecision1" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="Button" />
-                        <Button fx:id="buttonPrecision2" alignment="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="%basic_precision" />
-                        <Button fx:id="buttonPrecision3" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="Button" />
-                        <Button fx:id="buttonPrecision4" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="Button" />
+                        <Button fx:id="buttonPrecision1" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="%buttonPrecision1" textAlignment="CENTER" />
+                        <Button fx:id="buttonPrecision2" alignment="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="%buttonPrecision2" textAlignment="CENTER" />
+                        <Button fx:id="buttonPrecision3" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="%buttonPrecision3" textAlignment="CENTER" />
+                        <Button fx:id="buttonPrecision4" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="%buttonPrecision4" textAlignment="CENTER" />
                      </children>
                      <padding>
                         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                      </padding>
                   </HBox>
-                  <Label fx:id="labelPrecisionMofdeInfo" text="Label" />
+                  <Label fx:id="labelPrecisionModeInfo" text="Label">
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0" startX="1.0">
+                           <stops>
+                              <Stop color="#007bff" />
+                              <Stop color="#007bff" offset="0.007662835249042145" />
+                              <Stop color="WHITE" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </textFill></Label>
                   <HBox fx:id="hBoxPrecision2" alignment="CENTER" fillHeight="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="30.0">
                      <children>
-                        <Button fx:id="buttonPrecision5" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="Button" />
-                        <Button fx:id="buttonPrecision6" alignment="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="Button" />
-                        <Button fx:id="buttonPrecision7" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="Button" />
-                        <Button fx:id="buttonPrecision8" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="Button" />
+                        <Button fx:id="buttonPrecision5" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="%buttonPrecision5" textAlignment="CENTER" />
+                        <Button fx:id="buttonPrecision6" alignment="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="%buttonPrecision6" textAlignment="CENTER" />
+                        <Button fx:id="buttonPrecision7" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="%buttonPrecision7" textAlignment="CENTER" />
+                        <Button fx:id="buttonPrecision8" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_precision" text="%buttonPrecision8" textAlignment="CENTER" />
                      </children>
                      <padding>
                         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
@@ -142,22 +160,31 @@
                <children>
                   <HBox fx:id="hBoxSpeed1" alignment="CENTER" fillHeight="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="30.0">
                      <children>
-                        <Button fx:id="buttonSpeed1" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_speed" text="Button" />
-                        <Button fx:id="buttonSpeed2" alignment="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_speed" text="Button" />
-                        <Button fx:id="buttonSpeed3" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_speed" text="Button" />
-                        <Button fx:id="buttonSpeed4" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_speed" text="Button" />
+                        <Button fx:id="buttonSpeed1" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_speed" text="%buttonSpeed1" textAlignment="CENTER" />
+                        <Button fx:id="buttonSpeed2" alignment="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_speed" text="%buttonSpeed2" textAlignment="CENTER" />
+                        <Button fx:id="buttonSpeed3" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_speed" text="%buttonSpeed3" textAlignment="CENTER" />
+                        <Button fx:id="buttonSpeed4" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_speed" text="%buttonSpeed4" textAlignment="CENTER" />
                      </children>
                      <padding>
                         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                      </padding>
                   </HBox>
-                  <Label fx:id="labelSpeedModeInfo" text="Label" />
+                  <Label fx:id="labelSpeedModeInfo" text="Label">
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0" startX="1.0">
+                           <stops>
+                              <Stop color="LIME" />
+                              <Stop color="LIME" offset="0.007662835249042145" />
+                              <Stop color="#105b02" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </textFill></Label>
                   <HBox fx:id="hBoxSpeed2" alignment="CENTER" fillHeight="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="30.0">
                      <children>
-                        <Button fx:id="buttonSpeed5" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_speed" text="Button" />
-                        <Button fx:id="buttonSpeed6" alignment="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_speed" text="Button" />
-                        <Button fx:id="buttonSpeed7" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_speed" text="Button" />
-                        <Button fx:id="buttonSpeed8" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_speed" text="Button" />
+                        <Button fx:id="buttonSpeed5" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_speed" text="%buttonSpeed5" textAlignment="CENTER" />
+                        <Button fx:id="buttonSpeed6" alignment="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_speed" text="%buttonSpeed6" textAlignment="CENTER" />
+                        <Button fx:id="buttonSpeed7" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_speed" text="%buttonSpeed7" textAlignment="CENTER" />
+                        <Button fx:id="buttonSpeed8" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="button_speed" text="%buttonSpeed8" textAlignment="CENTER" />
                      </children>
                      <padding>
                         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
