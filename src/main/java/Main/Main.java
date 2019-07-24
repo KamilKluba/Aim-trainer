@@ -1,20 +1,26 @@
 package Main;
 
-import controllers.WindowController;
+import controllers.MainWindowController;
+import controllers.PlayWindowController;
 import javafx.application.Application;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Main extends Application{
     private double width = 1024;
     private double height = 576;
+    private double xOffset = 0;
+    private double yOffset = 0;
+    private boolean ctrlDown = false;
+    private Stage stage;
+    private Scene sceneMainWindow;
+    private Scene scenePlayWindow;
 
     public static void main(String args[]){
         launch(args);
@@ -22,29 +28,59 @@ public class Main extends Application{
 
 
     public void start(Stage primaryStage) throws Exception {
-        //Locale.setDefault(new Locale("en"));
         System.getProperty("file.encoding", "UTF-8");
         ResourceBundle resourceBundle = ResourceBundle.getBundle("messages");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Window.fxml"));
-        loader.setResources(resourceBundle);
-        TabPane tabPane = loader.load();
 
-        WindowController controller = loader.getController();
+        FXMLLoader loaderMainWindow = new FXMLLoader(getClass().getResource("/fxml/MainWindow.fxml"));
+        loaderMainWindow.setResources(resourceBundle);
+        Pane pane = loaderMainWindow.load();
+        TabPane tabPane = (TabPane) pane.getChildren().get(0);
+        MainWindowController mainWindowController = loaderMainWindow.getController();
+        sceneMainWindow = new Scene(pane);
+        sceneMainWindow.getStylesheets().add(getClass().getResource("/CSS/Window/MainWindow.css").toExternalForm());
 
-        Scene scene = new Scene(tabPane);
-        scene.getStylesheets().add(getClass().getResource("/CSS/Window/Window.css").toExternalForm());
+        FXMLLoader loaderPlayWindow = new FXMLLoader(getClass().getResource("/fxml/PlayWindow.fxml"));
+        loaderPlayWindow.setResources(resourceBundle);
+        AnchorPane anchorPane = loaderPlayWindow.load();
+        PlayWindowController playWindowController = loaderPlayWindow.getController();
+        scenePlayWindow = new Scene(anchorPane);
+        scenePlayWindow.getStylesheets().add(getClass().getResource("/CSS/Window/MainWindow.css").toExternalForm());
 
-        primaryStage.setMinWidth(1024);
-        primaryStage.setMinHeight(576);
+        stage = primaryStage;
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.widthProperty().addListener((observable, oldValue, newValue) -> {
             width = (double)newValue;
-            controller.resizeButtons(width, height);
+            mainWindowController.resizeButtons(width, height);
+            playWindowController.setSizes(width, height);
         });
         primaryStage.heightProperty().addListener((observable, oldValue, newValue) -> {
             height = (double)newValue;
-            controller.resizeButtons(width, height);
+            mainWindowController.resizeButtons(width, height);
+            playWindowController.setSizes(width, height);
         });
-        primaryStage.setScene(scene);
+        primaryStage.setScene(sceneMainWindow);
+
+        tabPane.setOnKeyPressed(event -> {if(event.isControlDown()) ctrlDown = true;});
+        tabPane.setOnKeyReleased(event -> {if(!event.isControlDown()) ctrlDown = false;});
+        tabPane.setOnMousePressed(event -> {
+            if(ctrlDown) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+        tabPane.setOnMouseDragged(event -> {
+            if(ctrlDown) {
+                primaryStage.setX(event.getScreenX() - xOffset);
+                primaryStage.setY(event.getScreenY() - yOffset);
+            }
+        });
+
+        mainWindowController.setStage(primaryStage, this);
+        playWindowController.setStage(primaryStage, this);
         primaryStage.show();
+    }
+
+    public void changeScene(){
+        stage.setScene(scenePlayWindow);
     }
 }
