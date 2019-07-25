@@ -4,8 +4,6 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -13,7 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.concurrent.Callable;
 
 /**
  * I18N utility class..
@@ -33,21 +30,21 @@ public final class I18N {
      *
      * @return List of Locale objects.
      */
-    public static List<Locale> getSupportedLocales() {
+    private static List<Locale> getSupportedLocales() {
         return new ArrayList<>(Arrays.asList(Locale.ENGLISH, new Locale("pl")));
     }
 
     /**
      * get the default locale. This is the systems default if contained in the supported locales, english otherwise.
      *
-     * @return
+     * @return default locale
      */
-    public static Locale getDefaultLocale() {
+    private static Locale getDefaultLocale() {
         Locale sysDefault = Locale.getDefault();
         return getSupportedLocales().contains(sysDefault) ? sysDefault : new Locale("pl");
     }
 
-    public static Locale getLocale() {
+    private static Locale getLocale() {
         return locale.get();
     }
 
@@ -56,7 +53,7 @@ public final class I18N {
         Locale.setDefault(locale);
     }
 
-    public static ObjectProperty<Locale> localeProperty() {
+    private static ObjectProperty<Locale> localeProperty() {
         return locale;
     }
 
@@ -70,7 +67,7 @@ public final class I18N {
      *         optional arguments for the message
      * @return localized formatted string
      */
-    public static String get(final String key, final Object... args) {
+    private static String get(final String key, final Object... args) {
         ResourceBundle bundle = ResourceBundle.getBundle("messages", getLocale());
         return MessageFormat.format(bundle.getString(key), args);
     }
@@ -84,16 +81,5 @@ public final class I18N {
      */
     public static StringBinding createStringBinding(final String key, Object... args) {
         return Bindings.createStringBinding(() -> get(key, args), locale);
-    }
-
-    /**
-     * creates a String Binding to a localized String that is computed by calling the given func
-     *
-     * @param func
-     *         function called on every change
-     * @return StringBinding
-     */
-    public static StringBinding createStringBinding(Callable<String> func) {
-        return Bindings.createStringBinding(func, locale);
     }
 }

@@ -6,13 +6,16 @@ import Data.WindowSize;
 import Main.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -21,33 +24,25 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 public class MainWindowController {
-
-    private float defaultWidth = 1024;
-    private float defaultHeight = 576;
+    private Main main;
+    private Stage stage;
     private ArrayList<Button> arrayListButtons = new ArrayList<>();
+    private ArrayList<Button> arrayListOptionsButtons = new ArrayList<>();
     private ArrayList<HBox> arrayListHBoxes = new ArrayList<>();
     private ArrayList<VBox> arrayListVBoxes = new ArrayList<>();
     private ArrayList<HBox> arrayListHBoxesOptions = new ArrayList<>();
     private ArrayList<VBox> arrayListVBoxesOptions = new ArrayList<>();
     private ArrayList<Label> arrayListLabels = new ArrayList<>();
     private ArrayList<Question> arrayListQuestions = new ArrayList<>();
-    private ResourceBundle bundle = ResourceBundle.getBundle("messages");
-    @FXML
-    private TabPane tabPane;
     private WindowSize windowSize = new WindowSize(1024, 576);
     private boolean languagePolish = true;
 
-    private Stage stage;
-    private Main main;
-
-    @FXML private Tab tabReflex;
-    @FXML private Tab tabPrecision;
-    @FXML private Tab tabSpeed;
+    @FXML private TabPane tabPane;
     @FXML private Button buttonReflex1;
     @FXML private Button buttonReflex2;
     @FXML private Button buttonReflex3;
@@ -69,7 +64,7 @@ public class MainWindowController {
     @FXML private Button buttonPrecision8;
     @FXML private HBox hBoxPrecision1;
     @FXML private HBox hBoxPrecision2;
-    @FXML private VBox vBoxPrecision;
+    @FXML private VBox vBoxPrecision1;
     @FXML private Button buttonSpeed1;
     @FXML private Button buttonSpeed2;
     @FXML private Button buttonSpeed3;
@@ -116,9 +111,6 @@ public class MainWindowController {
     @FXML private Label tabSpeedLabel;
     @FXML private Label tabOptionsLabel;
 
-    EventHandler<MouseEvent> eventHandlerSetLabelInfo = event -> setLabelInfo(((Button)event.getSource()).getId());
-    EventHandler<MouseEvent> eventHandlerClearLabelInfo = event -> clearLabelInfo();
-
     public void initialize(){
         arrayListButtons.add(buttonReflex1);
         arrayListButtons.add(buttonReflex2);
@@ -151,7 +143,7 @@ public class MainWindowController {
         arrayListButtons.add(buttonPrecision8);
         arrayListHBoxes.add(hBoxPrecision1);
         arrayListHBoxes.add(hBoxPrecision2);
-        arrayListVBoxes.add(vBoxPrecision);
+        arrayListVBoxes.add(vBoxPrecision1);
         buttonPrecision1.textProperty().bind(I18N.createStringBinding("buttonPrecision1"));
         buttonPrecision2.textProperty().bind(I18N.createStringBinding("buttonPrecision2"));
         buttonPrecision3.textProperty().bind(I18N.createStringBinding("buttonPrecision3"));
@@ -206,13 +198,15 @@ public class MainWindowController {
         arrayListVBoxesOptions.add(vBoxOptions001);
         arrayListVBoxesOptions.add(vBoxOptions01);
         arrayListVBoxesOptions.add(vBoxOptions010);
-        arrayListButtons.add(buttonOptionsApply);
-        arrayListButtons.add(buttonOptionsOk);
-        arrayListButtons.add(buttonOptionsCancel);
+        arrayListOptionsButtons.add(buttonOptionsApply);
+        arrayListOptionsButtons.add(buttonOptionsOk);
+        arrayListOptionsButtons.add(buttonOptionsCancel);
 
-
-        for(Button b : arrayListButtons) b.setOnMouseEntered(eventHandlerSetLabelInfo);
-        for(Button b : arrayListButtons) b.setOnMouseExited(eventHandlerClearLabelInfo);
+        for(Button b : arrayListButtons) {
+            b.setOnMouseEntered(event -> setLabelInfo(((Button)event.getSource()).getId()));
+            b.setOnMouseExited(event -> clearLabelInfo());
+            b.setOnMouseClicked(evt -> main.changeScene());
+        }
 
         labelReflexModeInfo.setText("\n\n");
         labelPrecisionModeInfo.setText("\n\n");
@@ -227,12 +221,14 @@ public class MainWindowController {
         comboBoxWindowSize.getItems().add(new WindowSize(2560, 1440));
         comboBoxWindowSize.getSelectionModel().select(0);
 
-        arrayListQuestions.add(new Question("messageWindow", 0));
-        arrayListQuestions.add(new Question("messageAuthor", 1));
-        ObservableList ol = FXCollections.observableList(arrayListQuestions);
+        arrayListQuestions.add(new Question("messageAuthor", 0));
+        arrayListQuestions.add(new Question("messageWindow", 1));
+        arrayListQuestions.add(new Question("messageWhatIsFPSMode", 2));
+        arrayListQuestions.add(new Question("messageExitFPSMode", 3));
+        ObservableList<Question> ol = FXCollections.observableList(arrayListQuestions);
         tableViewFAQ.setItems(ol);
         tableColumnQuestions.setCellValueFactory(new PropertyValueFactory<>("question"));
-        tableViewFAQ.getStyleClass().add("noheader");
+        tableViewFAQ.getStyleClass().add("comboBox_no_header");
         tableViewFAQ.setRowFactory(tableView -> {
             final TableRow<Question> row = new TableRow<>();
             row.hoverProperty().addListener((observable) -> {
@@ -269,9 +265,13 @@ public class MainWindowController {
         buttonMinimalize.setLayoutX(windowWidth - 120);
         buttonMinimalize.setLayoutY(10);
 
-        for(HBox h : arrayListHBoxes)h.setSpacing((windowWidth - defaultWidth) / 21 + 30);
+        for(HBox h : arrayListHBoxes)h.setSpacing((windowWidth - 1024) / 21 + 30);
         for(Button b : arrayListButtons) {
-            b.setPrefSize(windowWidth / defaultWidth * 200, windowHeigth / defaultHeight * 100);
+            b.setPrefSize(windowWidth / 1024 * 200, windowHeigth / 576 * 100);
+            b.setFont(new Font("Bank Gothic Medium BT", fontSize));
+        }
+        for(Button b : arrayListOptionsButtons) {
+            b.setPrefSize(windowWidth / 1024 * 200, windowHeigth / 576 * 100);
             b.setFont(new Font("Bank Gothic Medium BT", fontSize));
         }
 
@@ -292,20 +292,19 @@ public class MainWindowController {
         comboBoxWindowSize.setCellFactory(new Callback<ListView<WindowSize>, ListCell<WindowSize>>() {
             @Override
             public ListCell<WindowSize> call(ListView<WindowSize> param) {
-                ListCell cell = new ListCell<WindowSize>() {
+                return new ListCell<WindowSize>() {
                     @Override
-                    public void updateItem(WindowSize windowSize, boolean empty) {
-                        super.updateItem(windowSize, empty);
+                    public void updateItem(WindowSize windowSize1, boolean empty) {
+                        super.updateItem(windowSize1, empty);
                         setPrefHeight(padH25);
                         getListView().setPrefWidth(padW150);
                         if (!empty) {
-                            setText(windowSize.toString());
+                            setText(windowSize1.toString());
                         } else {
                             setText(null);
                         }
                     }
                 };
-                return cell;
             }
         });
         vBoxOptions01.setPadding(new Insets(padH50, 0, 0, padW50));
@@ -367,15 +366,17 @@ public class MainWindowController {
 
     private void setLabelFAQAnswer(int questionNumber){
         labelFAQAnswer.getStyleClass().clear();
-        if(questionNumber == 0) labelFAQAnswer.textProperty().bind(I18N.createStringBinding("moveWindow"));
-        else if(questionNumber == 1){
-            labelFAQAnswer.setText("                              \n\n\n\n\n\n\n\n\n\n");
-            labelFAQAnswer.getStyleClass().add("label_logo");
-        }
-        else if(questionNumber == -1){
+        if(questionNumber == -1){
             labelFAQAnswer.textProperty().unbind();
             labelFAQAnswer.setText("");
         }
+        else if(questionNumber == 0){
+            labelFAQAnswer.setText("                              \n\n\n\n\n\n\n\n\n\n");
+            labelFAQAnswer.getStyleClass().add("label_logo");
+        }
+        else if(questionNumber == 1) labelFAQAnswer.textProperty().bind(I18N.createStringBinding("messageWindowAnswer"));
+        else if(questionNumber == 2) labelFAQAnswer.textProperty().bind(I18N.createStringBinding("messageWhatIsFPSModeAnswer"));
+        else if(questionNumber == 3) labelFAQAnswer.textProperty().bind(I18N.createStringBinding("messageExitFPSModeAnswer"));
     }
 
     public void actionOptionsApply(){

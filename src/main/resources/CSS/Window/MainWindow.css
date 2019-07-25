@@ -199,7 +199,7 @@
     -fx-shape: null;
 }
 
-.noheader .column-header-background {
+.comboBox_no_header .column-header-background {
     -fx-max-height: 0;
     -fx-pref-height: 0;
     -fx-min-height: 0;

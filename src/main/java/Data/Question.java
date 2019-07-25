@@ -19,24 +19,12 @@ public class Question {
         return key;
     }
 
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getQuestion() {
+    public String getQuestion(){
         return question.getValue();
-    }
-
-    public void setQuestion(StringProperty question) {
-        this.question = question;
     }
 
     public int getQuestionNumber() {
         return questionNumber;
-    }
-
-    public void setQuestionNumber(int questionNumber) {
-        this.questionNumber = questionNumber;
     }
 
     @Override

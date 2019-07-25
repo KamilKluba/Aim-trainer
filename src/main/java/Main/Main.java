@@ -4,8 +4,11 @@ import controllers.MainWindowController;
 import controllers.PlayWindowController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -20,7 +23,7 @@ public class Main extends Application{
     private boolean ctrlDown = false;
     private Stage stage;
     private Scene sceneMainWindow;
-    private Scene scenePlayWindow;
+    public Scene scenePlayWindow;
 
     public static void main(String args[]){
         launch(args);
@@ -45,6 +48,12 @@ public class Main extends Application{
         PlayWindowController playWindowController = loaderPlayWindow.getController();
         scenePlayWindow = new Scene(anchorPane);
         scenePlayWindow.getStylesheets().add(getClass().getResource("/CSS/Window/MainWindow.css").toExternalForm());
+
+        Image image = new Image("CSS/Window/crosshair.png");
+        Cursor cursor = new ImageCursor(image, 256, 256);
+
+        scenePlayWindow.setCursor(cursor);
+        sceneMainWindow.setCursor(cursor);
 
         stage = primaryStage;
         primaryStage.initStyle(StageStyle.UNDECORATED);
