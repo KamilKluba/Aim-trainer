@@ -9,28 +9,24 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Cursor;
-import javafx.scene.ImageCursor;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainWindowController {
     private Main main;
     private Stage stage;
+    private PlayWindowController playWindowController;
     private ArrayList<Button> arrayListButtons = new ArrayList<>();
     private ArrayList<Button> arrayListOptionsButtons = new ArrayList<>();
     private ArrayList<HBox> arrayListHBoxes = new ArrayList<>();
@@ -39,7 +35,7 @@ public class MainWindowController {
     private ArrayList<VBox> arrayListVBoxesOptions = new ArrayList<>();
     private ArrayList<Label> arrayListLabels = new ArrayList<>();
     private ArrayList<Question> arrayListQuestions = new ArrayList<>();
-    private WindowSize windowSize = new WindowSize(1024, 576);
+    public WindowSize windowSize = new WindowSize(1024, 576);
     private boolean languagePolish = true;
 
     @FXML private TabPane tabPane;
@@ -81,7 +77,7 @@ public class MainWindowController {
     @FXML private Label labelSpeedModeInfo;
     @FXML private Button buttonExit;
     @FXML private Button buttonFullscreen;
-    @FXML private Button buttonMinimalize;
+    @FXML private Button buttonMinimize;
     @FXML private ComboBox<WindowSize> comboBoxWindowSize;
     @FXML private TableView<Question> tableViewFAQ;
     @FXML private TableColumn<Question, String> tableColumnQuestions;
@@ -112,6 +108,21 @@ public class MainWindowController {
     @FXML private Label tabOptionsLabel;
 
     public void initialize(){
+        tabPane.setOnKeyPressed(event -> {if(event.isControlDown()) main.setCtrlDown(true);});
+        tabPane.setOnKeyReleased(event -> {if(!event.isControlDown()) main.setCtrlDown(false);});
+        tabPane.setOnMousePressed(event -> {
+            if(main.isCtrlDown()) {
+                main.setxOffset(event.getSceneX());
+                main.setyOffset(event.getSceneY());
+            }
+        });
+        tabPane.setOnMouseDragged(event -> {
+            if(main.isCtrlDown()) {
+                stage.setX(event.getScreenX() - main.getxOffset());
+                stage.setY(event.getScreenY() - main.getyOffset());
+            }
+        });
+
         arrayListButtons.add(buttonReflex1);
         arrayListButtons.add(buttonReflex2);
         arrayListButtons.add(buttonReflex3);
@@ -205,7 +216,9 @@ public class MainWindowController {
         for(Button b : arrayListButtons) {
             b.setOnMouseEntered(event -> setLabelInfo(((Button)event.getSource()).getId()));
             b.setOnMouseExited(event -> clearLabelInfo());
-            b.setOnMouseClicked(evt -> main.changeScene());
+            b.setOnMouseClicked(evt -> {
+                main.changeScene();
+            });
         }
 
         labelReflexModeInfo.setText("\n\n");
@@ -228,7 +241,7 @@ public class MainWindowController {
         ObservableList<Question> ol = FXCollections.observableList(arrayListQuestions);
         tableViewFAQ.setItems(ol);
         tableColumnQuestions.setCellValueFactory(new PropertyValueFactory<>("question"));
-        tableViewFAQ.getStyleClass().add("comboBox_no_header");
+        tableViewFAQ.getStyleClass().add("table-view_no_header");
         tableViewFAQ.setRowFactory(tableView -> {
             final TableRow<Question> row = new TableRow<>();
             row.hoverProperty().addListener((observable) -> {
@@ -242,36 +255,44 @@ public class MainWindowController {
         });
     }
 
-    public void resizeButtons(double windowWidth, double windowHeigth) {
-        tabPane.setPrefSize(windowWidth, windowHeigth);
+    public void myInitialize(Main main){
+        this.main = main;
+        this.stage = main.getStage();
+        this.windowSize = main.getWindowSize();
+        this.playWindowController = main.getPlayWindowController();
+    }
 
-        double fontSize = 5 + (windowHeigth + windowWidth) / 150;
+    public void resizeWindow(double windowWidth, double windowHeight) {
+        windowSize.setHeight(windowHeight);
+        windowSize.setWidth(windowWidth);
+        tabPane.setPrefSize(windowWidth, windowHeight);
+
+        double fontSize = 5 + (windowHeight + windowWidth) / 150;
         double padW30 = windowWidth / 34.13;
         double padW50 = windowWidth / 20.48;
         double padW100 = windowWidth / 10.24;
         double padW150 = windowWidth / 6.827;
-        double padH15 = windowHeigth / 38.4;
-        double padH25 = windowHeigth / 23.04;
-        double padH30 = windowHeigth / 19.2;
-        double padH50 = windowHeigth / 11.52;
+        double padH15 = windowHeight / 38.4;
+        double padH25 = windowHeight / 23.04;
+        double padH30 = windowHeight / 19.2;
+        double padH50 = windowHeight / 11.52;
         double flagSizes = windowWidth / 16;
         double tableW = windowWidth / 2.56;
-        double tableH = windowHeigth / 1.92;
+        double tableH = windowHeight / 1.92;
 
         buttonExit.setLayoutX(windowWidth - 40);
         buttonExit.setLayoutY(10);
         buttonFullscreen.setLayoutX(windowWidth - 80);
         buttonFullscreen.setLayoutY(10);
-        buttonMinimalize.setLayoutX(windowWidth - 120);
-        buttonMinimalize.setLayoutY(10);
+        buttonMinimize.setLayoutX(windowWidth - 120);
+        buttonMinimize.setLayoutY(10);
 
         for(HBox h : arrayListHBoxes)h.setSpacing((windowWidth - 1024) / 21 + 30);
         for(Button b : arrayListButtons) {
-            b.setPrefSize(windowWidth / 1024 * 200, windowHeigth / 576 * 100);
+            b.setPrefSize(windowWidth / 1024 * 200, windowHeight / 576 * 100);
             b.setFont(new Font("Bank Gothic Medium BT", fontSize));
         }
         for(Button b : arrayListOptionsButtons) {
-            b.setPrefSize(windowWidth / 1024 * 200, windowHeigth / 576 * 100);
             b.setFont(new Font("Bank Gothic Medium BT", fontSize));
         }
 
@@ -383,18 +404,19 @@ public class MainWindowController {
         WindowSize size = comboBoxWindowSize.getSelectionModel().getSelectedItem();
         if(size.getWidth() != windowSize.getWidth()) {
             windowSize.setWidth(size.getWidth());
-            windowSize.setHeigth(size.getHeigth());
+            windowSize.setHeight(size.getHeight());
             stage.setWidth(size.getWidth());
-            stage.setHeight(size.getHeigth());
-            resizeButtons(size.getWidth(), size.getHeigth());
+            stage.setHeight(size.getHeight());
 
             Rectangle2D screenBounds = Screen.getPrimary().getBounds();
             stage.setX((screenBounds.getMaxX() - size.getWidth()) / 2);
-            stage.setY((screenBounds.getMaxY() - size.getHeigth()) / 2);
+            stage.setY((screenBounds.getMaxY() - size.getHeight()) / 2);
 
             comboBoxWindowSize.getSelectionModel().select(size);
             comboBoxWindowSize.show();
             comboBoxWindowSize.hide();
+
+            main.setFullscreen(false);
         }
 
         ArrayList<Question> buffer = new ArrayList<>();
@@ -428,20 +450,19 @@ public class MainWindowController {
 
     public void actionFullscreen(){
         stage.setFullScreen(!stage.isFullScreen());
-        if(stage.isFullScreen())
+        if(stage.isFullScreen()) {
             comboBoxWindowSize.getSelectionModel().select(4);
-        else
+            main.setFullscreen(true);
+        }
+        else {
             comboBoxWindowSize.getSelectionModel().select(windowSize);
+            main.setFullscreen(false);
+        }
+        comboBoxWindowSize.show();
+        comboBoxWindowSize.hide();
     }
 
-    public void actionMinimalize(){
+    public void actionMinimize(){
         stage.setIconified(true);
     }
-
-    public void setStage(Stage stage, Main main){
-        this.main = main;
-        this.stage = stage;
-        tabPane = (TabPane) ((Pane) stage.getScene().getRoot()).getChildren().get(0);
-    }
-
 }

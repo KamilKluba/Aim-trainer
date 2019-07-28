@@ -432,6 +432,6 @@
       </TabPane>
       <Button fx:id="buttonExit" mnemonicParsing="false" onAction="#actionExit" prefHeight="30.0" prefWidth="30.0" style="-fx-background-size: contain;" styleClass="button_exit_image" stylesheets="@../CSS/Window/MainWindow.css" />
       <Button fx:id="buttonFullscreen" mnemonicParsing="false" onAction="#actionFullscreen" prefHeight="30.0" prefWidth="30.0" style="-fx-background-size: stretch;" styleClass="button_maximalize_image" stylesheets="@../CSS/Window/MainWindow.css" />
-      <Button fx:id="buttonMinimalize" mnemonicParsing="false" onAction="#actionMinimalize" prefHeight="30.0" prefWidth="30.0" style="-fx-background-size: stretch;" styleClass="button_minimalize_image" stylesheets="@../CSS/Window/MainWindow.css" />
+      <Button fx:id="buttonMinimize" mnemonicParsing="false" onAction="#actionMinimize" prefHeight="30.0" prefWidth="30.0" style="-fx-background-size: stretch;" styleClass="button_minimalize_image" stylesheets="@../CSS/Window/MainWindow.css" />
    </children>
 </Pane>

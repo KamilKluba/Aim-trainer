@@ -32,3 +32,17 @@
     -fx-background-color1: #ff0000;
     -fx-background-color2: #00a9e7;
 }
+
+.buttons_options{
+    -fx-background-color1: white;
+    -fx-background-color2: gray;
+    -fx-background-color3: black;
+    -fx-background-color4: transparent;
+    -fx-background-color: radial-gradient(focus-angle 360deg, focus-distance 0%, center 50% 50%, radius 60%, reflect, -fx-background-color1, -fx-background-color2 50%, -fx-background-color3 80%, -fx-background-color4 85%);
+    -fx-text-fill: linear-gradient(#000000, #ff0000);
+}
+
+.buttons_options:hover{
+    -fx-background-color1: gray;
+    -fx-background-color2: #505050;
+}

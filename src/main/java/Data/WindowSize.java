@@ -13,16 +13,16 @@ public class WindowSize {
         return width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
+    public void setWidth(double width) {
+        this.width = (int)width;
     }
 
-    public int getHeigth() {
+    public int getHeight() {
         return heigth;// + 14;
     }
 
-    public void setHeigth(int heigth) {
-        this.heigth = heigth;
+    public void setHeight(double heigth) {
+        this.heigth = (int)heigth;
     }
 
     @Override

@@ -150,6 +150,7 @@
     -fx-background-color2: gray;
     -fx-background-color3: black;
     -fx-background-color: radial-gradient(focus-angle 360deg, focus-distance 0%, center 50% 50%, radius 75%, reflect, -fx-background-color1, -fx-background-color2 50%, -fx-background-color3);
+    -fx-cursor: none;
 }
 
 .list-cell{
@@ -199,7 +200,7 @@
     -fx-shape: null;
 }
 
-.comboBox_no_header .column-header-background {
+.table-view_no_header .column-header-background {
     -fx-max-height: 0;
     -fx-pref-height: 0;
     -fx-min-height: 0;
