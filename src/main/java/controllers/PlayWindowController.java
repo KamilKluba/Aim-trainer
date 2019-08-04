@@ -1,28 +1,23 @@
 package controllers;
 
-import Data.Circle;
 import Data.Point;
 import Data.WindowSize;
 import Main.Main;
-import Modes.BasicSlide;
+import Modes.Precision.AimingOnTime;
+import Modes.Precision.GotYa;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.*;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class PlayWindowController {
     private Main main;
     private Stage stage;
     public WindowSize windowSize;
     private ArrayList<Point> arrayListPoints = new ArrayList<>();
-    private GraphicsContext graphicsContext;
 
     @FXML private AnchorPane anchorPane;
     @FXML private Button buttonMinimalize;
@@ -50,8 +45,6 @@ public class PlayWindowController {
         anchorPane.setOnMouseMoved(event -> {
             arrayListPoints.add(new Point(event.getX() - 50, event.getY() - 50));
         });
-
-        graphicsContext = canvas.getGraphicsContext2D();
     }
 
     public void myInitialize(Main main){
@@ -85,8 +78,8 @@ public class PlayWindowController {
         buttonMinimalize.setLayoutX(windowSize.getWidth() - 120);
         buttonMinimalize.setLayoutY(10);
 
-        canvas.setWidth(windowSize.getWidth() - padW100 - padW100);
-        canvas.setHeight(windowSize.getHeight() - 100);
+        canvas.setWidth(windowSize.getWidth() - padW150);
+        canvas.setHeight(windowSize.getHeight());
 
         buttonStart.setPrefSize(padW100 + padW30, padH30);
         buttonStart.setLayoutX(windowWidth - padW150);
@@ -96,7 +89,7 @@ public class PlayWindowController {
         buttonCancel.setLayoutY(windowHeight - padH30 - padH30);
 
         anchorPane.setOnMouseMoved(event -> {
-            arrayListPoints.add(new Point(event.getX() - 50, event.getY() - 50));
+            arrayListPoints.add(new Point(event.getX(), event.getY()));
         });
 
     }
@@ -115,7 +108,7 @@ public class PlayWindowController {
     }
 
     public void actionStart(){
-        BasicSlide basicSlide = new BasicSlide((int)canvas.getWidth(), (int)canvas.getHeight(), graphicsContext);
-        anchorPane.setOnMouseClicked(event -> basicSlide.checkIfHit(event.getX(), event.getY()));
+        GotYa basicSlide = new GotYa(canvas);
+        anchorPane.setOnMouseMoved(event -> basicSlide.checkIfInside(event.getX(), event.getY()));
     }
 }

@@ -10,7 +10,7 @@
       <Button fx:id="buttonExit" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="30.0" prefWidth="30.0" style="-fx-background-size: contain;" styleClass="button_exit_image" stylesheets="@../CSS/Window/PlayWindow.css" />
       <Button fx:id="buttonFullscreen" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" style="-fx-background-size: stretch;" styleClass="button_maximalize_image" stylesheets="@../CSS/Window/PlayWindow.css" />
       <Button fx:id="buttonMinimalize" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionMinimalize" prefHeight="30.0" prefWidth="30.0" style="-fx-background-size: stretch;" styleClass="button_minimalize_image" stylesheets="@../CSS/Window/PlayWindow.css" />
-      <Canvas fx:id="canvas" height="476.0" layoutX="141.0" layoutY="156.0" width="774.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0" />
+      <Canvas fx:id="canvas" height="576.0" layoutX="141.0" layoutY="156.0" width="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Button fx:id="buttonCancel" layoutX="850.0" layoutY="495.0" mnemonicParsing="false" onAction="#actionCancel" prefHeight="30.0" prefWidth="130.0" styleClass="buttons_options" stylesheets="@../CSS/Window/PlayWindow.css" text="Cancel">
          <font>
             <Font name="Bank Gothic Medium BT" size="12.0" />
