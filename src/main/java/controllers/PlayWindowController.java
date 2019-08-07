@@ -1,23 +1,33 @@
 package controllers;
 
+import Data.I18N;
 import Data.Point;
 import Data.WindowSize;
 import Main.Main;
-import Modes.Precision.AimingOnTime;
 import Modes.Precision.GotYa;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class PlayWindowController {
     private Main main;
     private Stage stage;
     public WindowSize windowSize;
     private ArrayList<Point> arrayListPoints = new ArrayList<>();
+    private String modeName;
+    private Runnable start;
+    private ExecutorService executor;
+    private ArrayList<javafx.scene.Node> arrayListComponents = new ArrayList<>();
 
     @FXML private AnchorPane anchorPane;
     @FXML private Button buttonMinimalize;
@@ -26,6 +36,16 @@ public class PlayWindowController {
     @FXML private Canvas canvas;
     @FXML private Button buttonStart;
     @FXML private Button buttonCancel;
+    @FXML private Label labelTimeLeft;
+    @FXML private Slider sliderModeOptions1;
+    @FXML private Label labelModeOptions1Info;
+    @FXML private Label labelModeOptions1Value;
+    @FXML private Slider sliderModeOptions2;
+    @FXML private Label labelModeOptions2Info;
+    @FXML private Label labelModeOptions2Value;
+    @FXML private Slider sliderModeOptions3;
+    @FXML private Label labelModeOptions3Info;
+    @FXML private Label labelModeOptions3Value;
 
     public void initialize(){
         anchorPane.setOnKeyPressed(event -> {if(event.isControlDown()) main.setCtrlDown(true);});
@@ -45,6 +65,31 @@ public class PlayWindowController {
         anchorPane.setOnMouseMoved(event -> {
             arrayListPoints.add(new Point(event.getX() - 50, event.getY() - 50));
         });
+        anchorPane.setOnMouseMoved(event -> {
+            arrayListPoints.add(new Point(event.getX(), event.getY()));
+        });
+        executor = Executors.newFixedThreadPool(1);
+        final int[] i = {60};
+        start = (() -> {
+            while(i[0] > 0) {
+                i[0]--;
+                Platform.runLater(() -> labelTimeLeft.setText("" + i[0]));
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        arrayListComponents.add(sliderModeOptions1);
+        arrayListComponents.add(labelModeOptions1Value);
+        arrayListComponents.add(labelModeOptions1Info);
+        arrayListComponents.add(sliderModeOptions2);
+        arrayListComponents.add(labelModeOptions2Value);
+        arrayListComponents.add(labelModeOptions2Info);
+        arrayListComponents.add(sliderModeOptions3);
+        arrayListComponents.add(labelModeOptions3Value);
+        arrayListComponents.add(labelModeOptions3Info);
     }
 
     public void myInitialize(Main main){
@@ -59,38 +104,78 @@ public class PlayWindowController {
         anchorPane.setPrefSize(windowWidth, windowHeight);
 
         double fontSize = 5 + (windowHeight + windowWidth) / 150;
+        double padW20 = windowWidth / 51.195;
         double padW30 = windowWidth / 34.13;
         double padW50 = windowWidth / 20.48;
         double padW100 = windowWidth / 10.24;
+        double padW130 = windowWidth / 7.877;
         double padW150 = windowWidth / 6.827;
         double padH15 = windowHeight / 38.4;
         double padH25 = windowHeight / 23.04;
         double padH30 = windowHeight / 19.2;
         double padH50 = windowHeight / 11.52;
+        double padH60 = windowHeight / 9.6;
+        double padH80 = windowHeight / 7.2;
+        double padH90 = windowHeight / 6.4;
+        double padH100 = windowHeight / 5.76;
+        double padH110 = windowHeight / 5.236;
+        double padH130 = windowHeight / 4.43;
         double flagSizes = windowWidth / 16;
         double tableW = windowWidth / 2.56;
         double tableH = windowHeight / 1.92;
 
-        buttonExit.setLayoutX(windowSize.getWidth() - 40);
-        buttonExit.setLayoutY(10);
-        buttonFullscreen.setLayoutX(windowSize.getWidth() - 80);
-        buttonFullscreen.setLayoutY(10);
-        buttonMinimalize.setLayoutX(windowSize.getWidth() - 120);
-        buttonMinimalize.setLayoutY(10);
+        AnchorPane.setRightAnchor(buttonExit, 10.0);
+        AnchorPane.setTopAnchor(buttonExit, 10.0);
+        AnchorPane.setRightAnchor(buttonFullscreen, 50.0);
+        AnchorPane.setTopAnchor(buttonFullscreen, 10.0);
+        AnchorPane.setRightAnchor(buttonMinimalize, 90.0);
+        AnchorPane.setTopAnchor(buttonMinimalize, 10.0);
 
         canvas.setWidth(windowSize.getWidth() - padW150);
         canvas.setHeight(windowSize.getHeight());
 
-        buttonStart.setPrefSize(padW100 + padW30, padH30);
-        buttonStart.setLayoutX(windowWidth - padW150);
-        buttonStart.setLayoutY(windowHeight - padH50 - padH30 - padH30);
-        buttonCancel.setPrefSize(padW100 + padW30, padH30);
-        buttonCancel.setLayoutX(windowWidth - padW150);
-        buttonCancel.setLayoutY(windowHeight - padH30 - padH30);
+        buttonStart.setPrefSize(padW130, padH30);
+        buttonStart.setFont(new Font("Bank Gothic Medium BT", fontSize));
+        AnchorPane.setRightAnchor(buttonStart, padW30);
+        AnchorPane.setBottomAnchor(buttonStart, padH80);
+        buttonCancel.setPrefSize(padW130, padH30);
+        buttonCancel.setFont(new Font("Bank Gothic Medium BT", fontSize));
+        AnchorPane.setRightAnchor(buttonCancel, padW30);
+        AnchorPane.setBottomAnchor(buttonCancel, padH30);
 
-        anchorPane.setOnMouseMoved(event -> {
-            arrayListPoints.add(new Point(event.getX(), event.getY()));
-        });
+        AnchorPane.setRightAnchor(labelTimeLeft, padW50);
+        AnchorPane.setTopAnchor(labelTimeLeft, padH50);
+
+        AnchorPane.setTopAnchor(sliderModeOptions1, padH130);
+        AnchorPane.setRightAnchor(sliderModeOptions1, padW30);
+        sliderModeOptions1.setPrefSize(padW150, padH15);
+        labelModeOptions1Info.setFont(new Font("Bank Gothic Medium BT", fontSize - 4));
+        AnchorPane.setTopAnchor(labelModeOptions1Info, padH90);
+        AnchorPane.setRightAnchor(labelModeOptions1Info,padW30);
+        labelModeOptions1Value.setFont(new Font("Bank Gothic Medium BT", fontSize - 4));
+        AnchorPane.setTopAnchor(labelModeOptions1Value, padH110);
+        AnchorPane.setRightAnchor(labelModeOptions1Value, padW30);
+
+        AnchorPane.setTopAnchor(sliderModeOptions2, padH130 + padH80);
+        AnchorPane.setRightAnchor(sliderModeOptions2, padW30);
+        sliderModeOptions2.setPrefSize(padW150, padH15);
+        labelModeOptions2Info.setFont(new Font("Bank Gothic Medium BT", fontSize - 4));
+        AnchorPane.setTopAnchor(labelModeOptions2Info, padH90 + padH80);
+        AnchorPane.setRightAnchor(labelModeOptions2Info,padW30);
+        labelModeOptions2Value.setFont(new Font("Bank Gothic Medium BT", fontSize - 4));
+        AnchorPane.setTopAnchor(labelModeOptions2Value, padH110 + padH80);
+        AnchorPane.setRightAnchor(labelModeOptions2Value, padW30);
+
+        AnchorPane.setTopAnchor(sliderModeOptions3, padH130 + padH80 + padH80);
+        AnchorPane.setRightAnchor(sliderModeOptions3, padW30);
+        sliderModeOptions3.setPrefSize(padW150, padH15);
+        labelModeOptions1Info.setFont(new Font("Bank Gothic Medium BT", fontSize - 4));
+        AnchorPane.setTopAnchor(labelModeOptions3Info, padH90 + padH80 + padH80);
+        AnchorPane.setRightAnchor(labelModeOptions3Info,padW30);
+        labelModeOptions3Value.setFont(new Font("Bank Gothic Medium BT", fontSize - 4));
+        AnchorPane.setTopAnchor(labelModeOptions3Value, padH110 + padH80 + padH80);
+        AnchorPane.setRightAnchor(labelModeOptions3Value, padW30);
+
 
     }
 
@@ -108,7 +193,78 @@ public class PlayWindowController {
     }
 
     public void actionStart(){
-        GotYa basicSlide = new GotYa(canvas);
+        GotYa basicSlide = new GotYa(canvas, 5);
         anchorPane.setOnMouseMoved(event -> basicSlide.checkIfInside(event.getX(), event.getY()));
+        executor.submit(start);
+    }
+
+    public void prepareMode(String modeName){
+        this.modeName = modeName;
+        for(javafx.scene.Node n : arrayListComponents)
+            n.setVisible(false);
+
+        if(modeName.equals("buttonPrecision1")) {
+        //slider1 is responsible from circle spawn time
+            sliderModeOptions1.setMin(500);
+            sliderModeOptions1.setMax(1500);
+            sliderModeOptions1.setValue(1000);
+            sliderModeOptions1.setMajorTickUnit(250);
+            sliderModeOptions1.setMinorTickCount(100);
+            sliderModeOptions1.valueProperty().addListener((obs, oldValue, newValue) -> labelModeOptions1Value.setText("" + (newValue.intValue() - newValue.intValue() % 100)));
+            sliderModeOptions1.setVisible(true);
+            labelModeOptions1Value.setText("1000");
+            labelModeOptions1Value.setVisible(true);
+            labelModeOptions1Info.textProperty().bind(I18N.createStringBinding("labelCircleSpawnTimeInfo"));
+            labelModeOptions1Info.setVisible(true);
+        }
+        else if(modeName.equals("buttonPrecision2")){
+        //slider1 is responsible from circle spawn time
+            sliderModeOptions1.setMin(500);
+            sliderModeOptions1.setMax(1500);
+            sliderModeOptions1.setValue(1000);
+            sliderModeOptions1.setMajorTickUnit(250);
+            sliderModeOptions1.valueProperty().addListener((obs, oldValue, newValue) -> labelModeOptions1Value.setText("" + (newValue.intValue() - newValue.intValue() % 100)));
+            sliderModeOptions1.setVisible(true);
+            labelModeOptions1Value.setText("1000");
+            labelModeOptions1Value.setVisible(true);
+            labelModeOptions1Info.textProperty().bind(I18N.createStringBinding("labelCircleSpawnTimeInfo"));
+            labelModeOptions1Info.setVisible(true);
+        //slider2 is responsible from circle life time
+            sliderModeOptions2.setMin(1000);
+            sliderModeOptions2.setMax(2000);
+            sliderModeOptions2.setValue(1500);
+            sliderModeOptions2.setMajorTickUnit(250);
+            sliderModeOptions2.valueProperty().addListener((obs, oldValue, newValue) -> labelModeOptions2Value.setText("" + (newValue.intValue() - newValue.intValue() % 100)));
+            sliderModeOptions2.setVisible(true);
+            labelModeOptions2Value.setText("1500");
+            labelModeOptions2Value.setVisible(true);
+            labelModeOptions2Info.textProperty().bind(I18N.createStringBinding("labelCircleLifeTimeInfo"));
+            labelModeOptions2Info.setVisible(true);
+        }
+        else if(modeName.equals("buttonPrecision3")){
+        //slider1 is responsible from circle speed
+            sliderModeOptions1.setMin(1);
+            sliderModeOptions1.setMax(5);
+            sliderModeOptions1.setValue(3);
+            sliderModeOptions1.setMajorTickUnit(1);
+            sliderModeOptions1.valueProperty().addListener((obs, oldValue, newValue) -> labelModeOptions1Value.setText("" + newValue.intValue()));
+            sliderModeOptions1.setVisible(true);
+            labelModeOptions1Value.setText("3");
+            labelModeOptions1Value.setVisible(true);
+            labelModeOptions1Info.textProperty().bind(I18N.createStringBinding("labelCircleSpeedInfo"));
+            labelModeOptions1Info.setVisible(true);
+
+        //slider2 is responsible from circle agility
+            sliderModeOptions2.setMin(1);
+            sliderModeOptions2.setMax(9);
+            sliderModeOptions2.setValue(5);
+            sliderModeOptions2.setMajorTickUnit(1);
+            sliderModeOptions2.valueProperty().addListener((obs, oldValue, newValue) -> labelModeOptions2Value.setText("" + newValue.intValue()));
+            sliderModeOptions2.setVisible(true);
+            labelModeOptions2Value.setText("5");
+            labelModeOptions2Value.setVisible(true);
+            labelModeOptions2Info.textProperty().bind(I18N.createStringBinding("labelCircleAgilityInfo"));
+            labelModeOptions2Info.setVisible(true);
+        }
     }
 }

@@ -41,7 +41,7 @@ public final class I18N {
      */
     private static Locale getDefaultLocale() {
         Locale sysDefault = Locale.getDefault();
-        return getSupportedLocales().contains(sysDefault) ? sysDefault : new Locale("pl");
+        return getSupportedLocales().contains(sysDefault) ? sysDefault : Locale.ENGLISH;
     }
 
     private static Locale getLocale() {

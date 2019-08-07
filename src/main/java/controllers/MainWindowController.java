@@ -168,9 +168,9 @@ public class MainWindowController {
         tabOptionsLabel.textProperty().bind(I18N.createStringBinding("tabOptions"));
         labelLanguage.textProperty().bind(I18N.createStringBinding("labelLanguage"));
         labelWindowSize.textProperty().bind(I18N.createStringBinding("labelWindowSize"));
-        buttonOptionsApply.textProperty().bind(I18N.createStringBinding("buttonOptionsApply"));
-        buttonOptionsOk.textProperty().bind(I18N.createStringBinding("buttonOptionsOk"));
-        buttonOptionsCancel.textProperty().bind(I18N.createStringBinding("buttonOptionsCancel"));
+        buttonOptionsApply.textProperty().bind(I18N.createStringBinding("buttonApply"));
+        buttonOptionsOk.textProperty().bind(I18N.createStringBinding("buttonOk"));
+        buttonOptionsCancel.textProperty().bind(I18N.createStringBinding("buttonCancel"));
 
         arrayListButtons.add(buttonSpeed1);
         arrayListButtons.add(buttonSpeed2);
@@ -218,6 +218,7 @@ public class MainWindowController {
             b.setOnMouseExited(event -> clearLabelInfo());
             b.setOnMouseClicked(evt -> {
                 main.changeScene();
+                playWindowController.prepareMode(b.getId());
             });
         }
 

@@ -401,17 +401,17 @@
                         </VBox>
                         <VBox fx:id="vBoxOptions02" alignment="BOTTOM_RIGHT" spacing="15.0">
                            <children>
-                              <Button fx:id="buttonOptionsApply" mnemonicParsing="false" onAction="#actionOptionsApply" prefHeight="30.0" prefWidth="130.0" styleClass="buttons_options" stylesheets="@../CSS/Window/MainWindow.css" text="%buttonOptionsApply">
+                              <Button fx:id="buttonOptionsApply" mnemonicParsing="false" onAction="#actionOptionsApply" prefHeight="30.0" prefWidth="130.0" styleClass="buttons_options" stylesheets="@../CSS/Window/MainWindow.css" text="%buttonApply">
                                  <font>
                                     <Font name="Bank Gothic Medium BT" size="12.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="buttonOptionsOk" mnemonicParsing="false" onAction="#actionOptionsOk" prefHeight="30.0" prefWidth="130.0" styleClass="buttons_options" stylesheets="@../CSS/Window/MainWindow.css" text="%buttonOptionsOk">
+                              <Button fx:id="buttonOptionsOk" mnemonicParsing="false" onAction="#actionOptionsOk" prefHeight="30.0" prefWidth="130.0" styleClass="buttons_options" stylesheets="@../CSS/Window/MainWindow.css" text="%buttonOk">
                                  <font>
                                     <Font name="Bank Gothic Medium BT" size="12.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="buttonOptionsCancel" mnemonicParsing="false" onAction="#actionOptionsCancel" prefHeight="30.0" prefWidth="130.0" styleClass="buttons_options" stylesheets="@../CSS/Window/MainWindow.css" text="%buttonOptionsCancel">
+                              <Button fx:id="buttonOptionsCancel" mnemonicParsing="false" onAction="#actionOptionsCancel" prefHeight="30.0" prefWidth="130.0" styleClass="buttons_options" stylesheets="@../CSS/Window/MainWindow.css" text="%buttonCancel">
                                  <font>
                                     <Font name="Bank Gothic Medium BT" size="12.0" />
                                  </font>

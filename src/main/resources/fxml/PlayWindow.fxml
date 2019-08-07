@@ -2,24 +2,63 @@
 
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1024.0" style="-fx-background-size: stretch;" styleClass="background_image" stylesheets="@../CSS/Window/PlayWindow.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PlayWindowController">
    <children>
-      <Button fx:id="buttonExit" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="30.0" prefWidth="30.0" style="-fx-background-size: contain;" styleClass="button_exit_image" stylesheets="@../CSS/Window/PlayWindow.css" />
-      <Button fx:id="buttonFullscreen" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" style="-fx-background-size: stretch;" styleClass="button_maximalize_image" stylesheets="@../CSS/Window/PlayWindow.css" />
-      <Button fx:id="buttonMinimalize" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionMinimalize" prefHeight="30.0" prefWidth="30.0" style="-fx-background-size: stretch;" styleClass="button_minimalize_image" stylesheets="@../CSS/Window/PlayWindow.css" />
+      <Button fx:id="buttonExit" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="30.0" prefWidth="30.0" style="-fx-background-size: contain;" styleClass="button_exit_image" stylesheets="@../CSS/Window/PlayWindow.css" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <Button fx:id="buttonFullscreen" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" style="-fx-background-size: stretch;" styleClass="button_maximalize_image" stylesheets="@../CSS/Window/PlayWindow.css" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="10.0" />
+      <Button fx:id="buttonMinimalize" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionMinimalize" prefHeight="30.0" prefWidth="30.0" style="-fx-background-size: stretch;" styleClass="button_minimalize_image" stylesheets="@../CSS/Window/PlayWindow.css" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="10.0" />
       <Canvas fx:id="canvas" height="576.0" layoutX="141.0" layoutY="156.0" width="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Button fx:id="buttonCancel" layoutX="850.0" layoutY="495.0" mnemonicParsing="false" onAction="#actionCancel" prefHeight="30.0" prefWidth="130.0" styleClass="buttons_options" stylesheets="@../CSS/Window/PlayWindow.css" text="Cancel">
+      <Button fx:id="buttonCancel" layoutX="850.0" layoutY="495.0" mnemonicParsing="false" onAction="#actionCancel" prefHeight="30.0" prefWidth="130.0" styleClass="buttons_options" stylesheets="@../CSS/Window/PlayWindow.css" text="%buttonCancel" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="40.0">
          <font>
             <Font name="Bank Gothic Medium BT" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="buttonStart" layoutX="850.0" layoutY="450.0" mnemonicParsing="false" onAction="#actionStart" prefHeight="30.0" prefWidth="130.0" styleClass="buttons_options" stylesheets="@../CSS/Window/PlayWindow.css" text="Start">
+      <Button fx:id="buttonStart" layoutX="850.0" layoutY="450.0" mnemonicParsing="false" onAction="#actionStart" prefHeight="30.0" prefWidth="130.0" styleClass="buttons_options" stylesheets="@../CSS/Window/PlayWindow.css" text="Start" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="40.0">
          <font>
             <Font name="Bank Gothic Medium BT" size="12.0" />
          </font>
       </Button>
+      <Label fx:id="labelTimeLeft" layoutX="952.0" layoutY="72.0" styleClass="label_speed" stylesheets="@../CSS/Window/PlayWindow.css" text="halo" textAlignment="CENTER" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+         <font>
+            <Font name="Bank Gothic Medium BT" size="30.0" />
+         </font>
+      </Label>
+      <Slider fx:id="sliderModeOptions1" blockIncrement="100.0" layoutX="845.0" layoutY="103.0" majorTickUnit="500.0" max="1500.0" min="500.0" minorTickCount="100" prefHeight="15.0" prefWidth="150.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1000.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="130.0" />
+      <Label fx:id="labelModeOptions1Info" layoutX="844.0" layoutY="93.0" text="label slider 1 info" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="90.0">
+         <font>
+            <Font name="Bank Gothic Medium BT" size="12.0" />
+         </font></Label>
+      <Label fx:id="labelModeOptions1Value" layoutX="970.0" layoutY="90.0" text="value 1" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="110.0">
+         <font>
+            <Font name="Bank Gothic Medium BT" size="12.0" />
+         </font>
+      </Label>
+      <Slider fx:id="sliderModeOptions2" blockIncrement="100.0" layoutX="845.0" layoutY="197.0" majorTickUnit="500.0" max="1500.0" min="500.0" minorTickCount="100" prefHeight="15.0" prefWidth="150.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1000.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="210.0" />
+      <Label fx:id="labelModeOptions2Info" layoutX="844.0" layoutY="187.0" text="label slider 2 info" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="170.0">
+         <font>
+            <Font name="Bank Gothic Medium BT" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelModeOptions2Value" layoutX="970.0" layoutY="184.0" text="value 2" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="190.0">
+         <font>
+            <Font name="Bank Gothic Medium BT" size="12.0" />
+         </font>
+      </Label>
+      <Slider fx:id="sliderModeOptions3" blockIncrement="100.0" layoutX="838.0" layoutY="291.0" majorTickUnit="500.0" max="1500.0" min="500.0" minorTickCount="100" prefHeight="15.0" prefWidth="150.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1000.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="290.0" />
+      <Label fx:id="labelModeOptions3Info" layoutX="837.0" layoutY="281.0" text="label slider 3 info" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="250.0">
+         <font>
+            <Font name="Bank Gothic Medium BT" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelModeOptions3Value" layoutX="963.0" layoutY="278.0" text="value 3" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="270.0">
+         <font>
+            <Font name="Bank Gothic Medium BT" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
