@@ -36,6 +36,7 @@ public class AimingOnTime extends Mode {
                         0.63, true, CycleMethod.NO_CYCLE, stops)));
             }
             totalCircles++;
+            Platform.runLater(() -> playWindowController.getLabelResult1Value().setText("" + totalCircles));
             try {
                 Thread.sleep(spawnTime);
             } catch (InterruptedException e) {
@@ -80,11 +81,6 @@ public class AimingOnTime extends Mode {
                         graphicsContext.fillOval(c.getX() - c.getR() / 2, c.getY() - c.getR() / 2, c.getR(), c.getR());
                     }
                 }
-                graphicsContext.setStroke(Color.WHITE);
-                graphicsContext.strokeLine(canvasX - 1, 100, canvasX - 1, canvasY - 100);
-                graphicsContext.strokeLine(1, 100, 1, canvasY - 100);
-                graphicsContext.strokeLine(100, 1, canvasX - 100, 1);
-                graphicsContext.strokeLine(100, canvasY - 1, canvasX - 100, canvasY - 1);
             });
             try {
                 Thread.sleep(16);
@@ -103,6 +99,7 @@ public class AimingOnTime extends Mode {
                 }
         }
         hitCircles++;
+        Platform.runLater(() -> playWindowController.getLabelResult2Value().setText("" + totalCircles));
     }
 }
 

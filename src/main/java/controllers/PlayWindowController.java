@@ -32,7 +32,8 @@ public class PlayWindowController {
     private String modeName;
     private Runnable start;
     private ExecutorService executor;
-    private ArrayList<javafx.scene.Node> arrayListComponents = new ArrayList<>();
+    private ArrayList<javafx.scene.Node> arrayListOptionsComponents = new ArrayList<>();
+    private ArrayList<javafx.scene.Node> arrayListResultComponents = new ArrayList<>();
     private Mode chosenMode;
     private AtomicBoolean alive = new AtomicBoolean(false);
 
@@ -57,6 +58,7 @@ public class PlayWindowController {
     @FXML private Label labelResult1Value;
     @FXML private Label labelResult2Info;
     @FXML private Label labelResult2Value;
+    @FXML private Label labelCountdown;
 
     public void initialize(){
         anchorPane.setOnKeyPressed(event -> {if(event.isControlDown()) main.setCtrlDown(true);});
@@ -94,19 +96,19 @@ public class PlayWindowController {
             }
             chosenMode.setAlive(false);
         });
-        arrayListComponents.add(sliderModeOptions1);
-        arrayListComponents.add(labelModeOptions1Value);
-        arrayListComponents.add(labelModeOptions1Info);
-        arrayListComponents.add(sliderModeOptions2);
-        arrayListComponents.add(labelModeOptions2Value);
-        arrayListComponents.add(labelModeOptions2Info);
-        arrayListComponents.add(sliderModeOptions3);
-        arrayListComponents.add(labelModeOptions3Value);
-        arrayListComponents.add(labelModeOptions3Info);
-        arrayListComponents.add(labelResult1Info);
-        arrayListComponents.add(labelResult1Value);
-        arrayListComponents.add(labelResult2Info);
-        arrayListComponents.add(labelResult2Value);
+        arrayListOptionsComponents.add(sliderModeOptions1);
+        arrayListOptionsComponents.add(labelModeOptions1Value);
+        arrayListOptionsComponents.add(labelModeOptions1Info);
+        arrayListOptionsComponents.add(sliderModeOptions2);
+        arrayListOptionsComponents.add(labelModeOptions2Value);
+        arrayListOptionsComponents.add(labelModeOptions2Info);
+        arrayListOptionsComponents.add(sliderModeOptions3);
+        arrayListOptionsComponents.add(labelModeOptions3Value);
+        arrayListOptionsComponents.add(labelModeOptions3Info);
+        arrayListResultComponents.add(labelResult1Info);
+        arrayListResultComponents.add(labelResult1Value);
+        arrayListResultComponents.add(labelResult2Info);
+        arrayListResultComponents.add(labelResult2Value);
     }
 
     public void myInitialize(Main main){
@@ -125,6 +127,7 @@ public class PlayWindowController {
         double padW30 = windowWidth / 34.13;
         double padW50 = windowWidth / 20.48;
         double padW80 = windowWidth / 12.8;
+        double padW90 = windowWidth / 11.378;
         double padW100 = windowWidth / 10.24;
         double padW130 = windowWidth / 7.877;
         double padW150 = windowWidth / 6.827;
@@ -166,6 +169,9 @@ public class PlayWindowController {
         AnchorPane.setRightAnchor(labelTimeLeft, padW50);
         AnchorPane.setTopAnchor(labelTimeLeft, padH50);
 
+        AnchorPane.setLeftAnchor(labelCountdown, padW130 + padW130 + padW100);
+        AnchorPane.setTopAnchor(labelCountdown, padH130 + padH110);
+
         AnchorPane.setTopAnchor(sliderModeOptions1, padH130);
         AnchorPane.setRightAnchor(sliderModeOptions1, padW30);
         sliderModeOptions1.setPrefSize(padW150, padH15);
@@ -197,13 +203,13 @@ public class PlayWindowController {
         AnchorPane.setRightAnchor(labelModeOptions3Value, padW30);
 
         AnchorPane.setBottomAnchor(labelResult1Info,  padH130);
-        AnchorPane.setRightAnchor(labelResult1Info, padW80);
+        AnchorPane.setRightAnchor(labelResult1Info, padW90);
         labelResult1Info.setFont(new Font("Bank Gothic Medium BT", fontSize - 4));
         AnchorPane.setBottomAnchor(labelResult1Value,  padH130);
         AnchorPane.setRightAnchor(labelResult1Value, padW30);
         labelResult1Value.setFont(new Font("Bank Gothic Medium BT", fontSize - 4));
         AnchorPane.setBottomAnchor(labelResult2Info,  padH150);
-        AnchorPane.setRightAnchor(labelResult2Info, padW80);
+        AnchorPane.setRightAnchor(labelResult2Info, padW90);
         labelResult2Info.setFont(new Font("Bank Gothic Medium BT", fontSize - 4));
         AnchorPane.setBottomAnchor(labelResult2Value,  padH150);
         AnchorPane.setRightAnchor(labelResult2Value, padW30);
@@ -228,50 +234,67 @@ public class PlayWindowController {
             alive.set(false);
         }
 
-        for(javafx.scene.Node n : arrayListComponents){
+        for(javafx.scene.Node n : arrayListOptionsComponents){
             n.setDisable(false);
         }
         buttonStart.setDisable(false);
     }
 
     public void actionStart(){
-        anchorPane.setOnMouseMoved(null);
-        anchorPane.setOnMouseClicked(null);
+        new Thread(() -> {
+            for (javafx.scene.Node n : arrayListOptionsComponents) {
+                n.setDisable(true);
+            }
+            buttonStart.setDisable(true);
+            buttonCancel.setDisable(true);
 
-        if(modeName.equals("buttonPrecision1")){
-            chosenMode = new BasicAiming(this, sliderModeOptions1.getValue());
-            anchorPane.setOnMouseClicked(event -> ((BasicAiming)chosenMode).checkIfHit(event.getX(), event.getY()));
-        }
-        else if(modeName.equals("buttonPrecision2")) {
-            chosenMode = new AimingOnTime(this, sliderModeOptions1.getValue(), sliderModeOptions2.getValue());
-            anchorPane.setOnMouseClicked(event -> ((AimingOnTime)chosenMode).checkIfHit(event.getX(), event.getY()));
-        }
-        else if(modeName.equals("buttonPrecision3")) {
-            chosenMode = new GotYa(this, sliderModeOptions1.getValue(), sliderModeOptions2.getValue() * 10, sliderModeOptions3.getValue());
-            anchorPane.setOnMouseMoved(event -> ((GotYa)chosenMode).checkIfInside(event.getX(), event.getY()));
-        }
-        else if(modeName.equals("buttonPrecision4")){
-            chosenMode = new AnotherOneBitesTheDust(this, sliderModeOptions1.getValue());
-            anchorPane.setOnMouseClicked(event -> ((AnotherOneBitesTheDust)chosenMode).checkIfHit(event.getX(), event.getY()));
-        }
+            labelCountdown.setVisible(true);
+            int i = 3;
+            while (i > 0) {
+                int finalI = i;
+                Platform.runLater(() -> labelCountdown.setText("" + finalI));
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                }
+                i--;
+            }
+            labelCountdown.setVisible(false);
 
-        for(javafx.scene.Node n : arrayListComponents){
-            n.setDisable(true);
-        }
+            anchorPane.setOnMouseMoved(null);
+            anchorPane.setOnMouseClicked(null);
+            anchorPane.setOnMouseDragged(null);
 
-        alive.set(true);
-        executor.submit(start);
-        buttonStart.setDisable(true);
+            if (modeName.equals("buttonPrecision1")) {
+                chosenMode = new BasicAiming(this, sliderModeOptions1.getValue());
+                anchorPane.setOnMouseClicked(event -> ((BasicAiming) chosenMode).checkIfHit(event.getX(), event.getY()));
+            } else if (modeName.equals("buttonPrecision2")) {
+                chosenMode = new AimingOnTime(this, sliderModeOptions1.getValue(), sliderModeOptions2.getValue());
+                anchorPane.setOnMouseClicked(event -> ((AimingOnTime) chosenMode).checkIfHit(event.getX(), event.getY()));
+            } else if (modeName.equals("buttonPrecision3")) {
+                chosenMode = new GotYa(this, sliderModeOptions1.getValue(), sliderModeOptions2.getValue() * 10, sliderModeOptions3.getValue());
+                anchorPane.setOnMouseMoved(event -> ((GotYa) chosenMode).checkIfInside(event.getX(), event.getY()));
+                anchorPane.setOnMouseDragged(event -> ((GotYa) chosenMode).checkIfInside(-100, -100));
+            } else if (modeName.equals("buttonPrecision4")) {
+                chosenMode = new AnotherOneBitesTheDust(this, sliderModeOptions1.getValue());
+                anchorPane.setOnMouseClicked(event -> ((AnotherOneBitesTheDust) chosenMode).checkIfHit(event.getX(), event.getY()));
+            }
 
+            buttonCancel.setDisable(false);
+            alive.set(true);
+            executor.submit(start);
+        }).start();
     }
 
     public void prepareMode(String modeName){
         this.modeName = modeName;
-        for(javafx.scene.Node n : arrayListComponents)
+        for(javafx.scene.Node n : arrayListOptionsComponents)
+            n.setVisible(false);
+        for(javafx.scene.Node n : arrayListResultComponents)
             n.setVisible(false);
 
         if(modeName.equals("buttonPrecision1")) {
-        //slider1 is responsible for circle spawn time
+            //slider1 is responsible for circle spawn time
             sliderModeOptions1.setMin(500);
             sliderModeOptions1.setMax(1500);
             sliderModeOptions1.setValue(1000);
@@ -283,12 +306,14 @@ public class PlayWindowController {
             labelModeOptions1Value.setVisible(true);
             labelModeOptions1Info.textProperty().bind(I18N.createStringBinding("labelCircleSpawnTimeInfo"));
             labelModeOptions1Info.setVisible(true);
+            //labelR1 is responsible for total amount of circles
             labelResult1Info.textProperty().bind(I18N.createStringBinding("labelResultTotalCircles"));
             labelResult1Info.setVisible(true);
             labelResult1Value.setText("0");
+            labelResult1Value.setVisible(true);
         }
         else if(modeName.equals("buttonPrecision2")){
-        //slider1 is responsible for circle spawn time
+            //slider1 is responsible for circle spawn time
             sliderModeOptions1.setMin(500);
             sliderModeOptions1.setMax(1500);
             sliderModeOptions1.setValue(1000);
@@ -299,7 +324,7 @@ public class PlayWindowController {
             labelModeOptions1Value.setVisible(true);
             labelModeOptions1Info.textProperty().bind(I18N.createStringBinding("labelCircleSpawnTimeInfo"));
             labelModeOptions1Info.setVisible(true);
-        //slider2 is responsible for circle life time
+            //slider2 is responsible for circle life time
             sliderModeOptions2.setMin(1000);
             sliderModeOptions2.setMax(3000);
             sliderModeOptions2.setValue(2000);
@@ -310,6 +335,16 @@ public class PlayWindowController {
             labelModeOptions2Value.setVisible(true);
             labelModeOptions2Info.textProperty().bind(I18N.createStringBinding("labelCircleLifeTimeInfo"));
             labelModeOptions2Info.setVisible(true);
+            //labelR1 is responsible for total amount of circles
+            labelResult1Info.textProperty().bind(I18N.createStringBinding("labelResultTotalCircles"));
+            labelResult1Info.setVisible(true);
+            labelResult1Value.setText("0");
+            labelResult1Value.setVisible(true);
+            //labelR1 is responsible for amount of hit circles
+            labelResult2Info.textProperty().bind(I18N.createStringBinding("labelResultHitCircles"));
+            labelResult2Info.setVisible(true);
+            labelResult2Value.setText("0");
+            labelResult2Value.setVisible(true);
         }
         else if(modeName.equals("buttonPrecision3")) {
             //slider1 is responsible for circle speed
@@ -323,7 +358,6 @@ public class PlayWindowController {
             labelModeOptions1Value.setVisible(true);
             labelModeOptions1Info.textProperty().bind(I18N.createStringBinding("labelCircleSpeedInfo"));
             labelModeOptions1Info.setVisible(true);
-
             //slider2 is responsible for circle agility
             sliderModeOptions2.setMin(1);
             sliderModeOptions2.setMax(9);
@@ -335,7 +369,6 @@ public class PlayWindowController {
             labelModeOptions2Value.setVisible(true);
             labelModeOptions2Info.textProperty().bind(I18N.createStringBinding("labelCircleAgilityInfo"));
             labelModeOptions2Info.setVisible(true);
-
             //slider3 is responsible for circle size
             sliderModeOptions3.setMin(20);
             sliderModeOptions3.setMax(60);
@@ -347,6 +380,16 @@ public class PlayWindowController {
             labelModeOptions3Value.setVisible(true);
             labelModeOptions3Info.textProperty().bind(I18N.createStringBinding("labelCircleSizeInfo"));
             labelModeOptions3Info.setVisible(true);
+            //labelR1 is responsible for total amount of points;
+            labelResult1Info.textProperty().bind(I18N.createStringBinding("labelResultTotalPoints"));
+            labelResult1Info.setVisible(true);
+            labelResult1Value.setText("0");
+            labelResult1Value.setVisible(true);
+            //labelR2 is responsible for the highest single gain;
+            labelResult2Info.textProperty().bind(I18N.createStringBinding("labelResultHighestSingleGain"));
+            labelResult2Info.setVisible(true);
+            labelResult2Value.setText("0");
+            labelResult2Value.setVisible(true);
         }
         else if(modeName.equals("buttonPrecision4")){
             //slider1 is responsible for circle size
@@ -360,6 +403,11 @@ public class PlayWindowController {
             labelModeOptions1Value.setVisible(true);
             labelModeOptions1Info.textProperty().bind(I18N.createStringBinding("labelCircleSizeInfo"));
             labelModeOptions1Info.setVisible(true);
+            //labelR1 is responsible for the amount of hit circles;
+            labelResult1Info.textProperty().bind(I18N.createStringBinding("labelResultHitCircles"));
+            labelResult1Info.setVisible(true);
+            labelResult1Value.setText("0");
+            labelResult1Value.setVisible(true);
         }
     }
 

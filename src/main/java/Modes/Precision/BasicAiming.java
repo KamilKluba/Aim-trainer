@@ -33,6 +33,7 @@ public class BasicAiming extends Mode {
                         0.63, true, CycleMethod.NO_CYCLE, stops)));
             }
             totalCircles++;
+            Platform.runLater(() -> playWindowController.getLabelResult1Value().setText("" + totalCircles));
             try {
                 Thread.sleep(spawnTime);
             } catch (InterruptedException e) {
@@ -84,9 +85,6 @@ public class BasicAiming extends Mode {
                     break;
                 }
         }
-        hitCircles++;
-        playWindowController.getLabelResult1Value().setText("" + hitCircles);
     }
-
 }
 

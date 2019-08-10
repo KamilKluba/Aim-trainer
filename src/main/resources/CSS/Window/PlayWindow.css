@@ -50,6 +50,6 @@
     -fx-background-color2: #505050;
 }
 
-.label_speed{
+.label_black_red_fill{
     -fx-text-fill: linear-gradient(#000000, #ff0000);
 }

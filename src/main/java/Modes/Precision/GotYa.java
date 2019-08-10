@@ -2,16 +2,12 @@ package Modes.Precision;
 
 import Data.Circle;
 import Modes.Mode;
-import com.sun.javafx.tk.Toolkit;
 import controllers.PlayWindowController;
 import javafx.application.Platform;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.RadialGradient;
 
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 
 public class GotYa extends Mode {
     private Circle circle;
@@ -21,6 +17,11 @@ public class GotYa extends Mode {
     private double circleSize;
     private double lastX;
     private double lastY;
+    private double currentGain = 1;
+    private double highestGain = 1;
+    private double score = 0;
+    private DecimalFormat decimalFormatHighestGain = new DecimalFormat("##0.00");
+    private DecimalFormat decimalFormatScore = new DecimalFormat("##0.0");
 
     public GotYa(PlayWindowController playWindowController, double circleSpeed, double circleAgility, double circleSize) {
         super(playWindowController);
@@ -73,6 +74,7 @@ public class GotYa extends Mode {
                 Thread.sleep(5);
             }catch(InterruptedException e){e.printStackTrace();}
         }
+        circle.setX(-100);
     }
 
     private void drawCircle(){
@@ -89,7 +91,7 @@ public class GotYa extends Mode {
 
             Platform.runLater(() -> {
                 graphicsContext.clearRect(circleX - circleR / 2 - 20, circleY - circleR / 2 - 20,
-                        circleX - circleR / 2 + 40, circleY - circleR / 2 + 40);
+                        circleX - circleR + 40, circleY - circleR + 40);
                 graphicsContext.setFill(circle.getColor());
                 graphicsContext.fillOval(circleX - circleR / 2, circleY - circleR / 2,
                         circleR, circleR);
@@ -130,13 +132,19 @@ public class GotYa extends Mode {
             if (Math.sqrt(Math.pow((circle.getX() - x), 2) + Math.pow((circle.getY() - y), 2)) <= circle.getR() / 2) {
                 circle.setColor(new RadialGradient(0.63, 0.58, 0.7, 0.7,
                         0.63, true, CycleMethod.NO_CYCLE, stops2));
+                currentGain += 0.01;
+                score += currentGain;
             }
             else{
                 circle.setColor(new RadialGradient(0.63, 0.58, 0.7, 0.7,
                         0.63, true, CycleMethod.NO_CYCLE, stops));
+                currentGain = 1;
             }
         }
+        Platform.runLater(() -> playWindowController.getLabelResult1Value().setText("" + decimalFormatScore.format(score)));
+        if(currentGain > highestGain){
+            Platform.runLater(() -> playWindowController.getLabelResult2Value().setText("" + decimalFormatHighestGain.format(highestGain)));
+            highestGain = currentGain;
+        }
     }
-
-
 }

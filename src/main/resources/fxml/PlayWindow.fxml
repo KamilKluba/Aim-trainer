@@ -23,7 +23,7 @@
             <Font name="Bank Gothic Medium BT" size="12.0" />
          </font>
       </Button>
-      <Label fx:id="labelTimeLeft" layoutX="952.0" layoutY="72.0" styleClass="label_speed" stylesheets="@../CSS/Window/PlayWindow.css" textAlignment="CENTER" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+      <Label fx:id="labelTimeLeft" layoutX="952.0" layoutY="72.0" styleClass="label_black_red_fill" stylesheets="@../CSS/Window/PlayWindow.css" textAlignment="CENTER" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
          <font>
             <Font name="Bank Gothic Medium BT" size="30.0" />
          </font>
@@ -60,12 +60,12 @@
             <Font name="Bank Gothic Medium BT" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="labelResult1Info" layoutX="945.0" layoutY="408.0" text="Result 1" AnchorPane.bottomAnchor="130.0" AnchorPane.rightAnchor="80.0">
+      <Label fx:id="labelResult1Info" layoutX="945.0" layoutY="408.0" text="Result 1" AnchorPane.bottomAnchor="130.0" AnchorPane.rightAnchor="90.0">
          <font>
             <Font name="Bank Gothic Medium BT" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="labelResult2Info" layoutX="945.0" layoutY="434.0" text="Result 2" AnchorPane.bottomAnchor="150.0" AnchorPane.rightAnchor="80.0">
+      <Label fx:id="labelResult2Info" layoutX="945.0" layoutY="434.0" text="Result 2" AnchorPane.bottomAnchor="150.0" AnchorPane.rightAnchor="90.0">
          <font>
             <Font name="Bank Gothic Medium BT" size="12.0" />
          </font>
@@ -78,6 +78,11 @@
       <Label fx:id="labelResult1Value" layoutX="954.0" layoutY="431.0" text="10000" AnchorPane.bottomAnchor="130.0" AnchorPane.rightAnchor="30.0">
          <font>
             <Font name="Bank Gothic Medium BT" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelCountdown" alignment="CENTER" layoutX="363.0" layoutY="237.0" styleClass="label_black_red_fill" text="3" textAlignment="CENTER" visible="false" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="240.0">
+         <font>
+            <Font name="Bank Gothic Medium BT" size="96.0" />
          </font>
       </Label>
    </children>

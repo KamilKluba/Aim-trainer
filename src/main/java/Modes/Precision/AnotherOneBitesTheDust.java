@@ -10,6 +10,7 @@ import javafx.scene.paint.RadialGradient;
 
 public class AnotherOneBitesTheDust extends Mode {
     private Circle circle;
+    private int hitCircles = 0;
 
     public AnotherOneBitesTheDust(PlayWindowController playWindowController, double circleSize) {
         super(playWindowController);
@@ -28,6 +29,8 @@ public class AnotherOneBitesTheDust extends Mode {
             circle.setY(random.nextInt(canvasY - 60) + 30);
             graphicsContext.clearRect(0, 0, canvasX, canvasY);
             graphicsContext.fillOval(circle.getX() - circle.getR() / 2, circle.getY() - circle.getR() / 2, circle.getR(), circle.getR());
+            hitCircles++;
+            Platform.runLater(() -> playWindowController.getLabelResult1Value().setText("" + hitCircles));
         }
     }
 }
