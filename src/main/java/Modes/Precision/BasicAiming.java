@@ -2,14 +2,18 @@ package Modes.Precision;
 
 import Data.Circle;
 import Modes.Mode;
+import controllers.PlayWindowController;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.RadialGradient;
 
 public class BasicAiming extends Mode {
-    public BasicAiming(Canvas canvas) {
-        super(canvas);
+    private int spawnTime;
+
+    public BasicAiming(PlayWindowController playWindowController, double spawnTime) {
+        super(playWindowController);
+        this.spawnTime = (int)spawnTime;
 
         Runnable createCircles = (() -> createCircles());
         Runnable increaseCirclesSizes = (() -> modifyCircles());
@@ -25,7 +29,7 @@ public class BasicAiming extends Mode {
             synchronized (arrayListCircles){
                 arrayListCircles.add(new Circle(30 + Math.abs(random.nextInt() % (canvasX - 60)),
                         30 + Math.abs(random.nextInt() % (canvasY - 60)),
-                        1, -1, new RadialGradient(0.63, 0.58, 0.7, 0.7,
+                        0, -1, new RadialGradient(0.63, 0.58, 0.7, 0.7,
                         0.63, true, CycleMethod.NO_CYCLE, stops)));
             }
             totalCircles++;
@@ -65,7 +69,7 @@ public class BasicAiming extends Mode {
                 }
             });
             try {
-                Thread.sleep(16);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -81,6 +85,7 @@ public class BasicAiming extends Mode {
                 }
         }
         hitCircles++;
+        playWindowController.getLabelResult1Value().setText("" + hitCircles);
     }
 
 }

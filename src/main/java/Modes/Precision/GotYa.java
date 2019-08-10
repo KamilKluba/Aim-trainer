@@ -3,6 +3,7 @@ package Modes.Precision;
 import Data.Circle;
 import Modes.Mode;
 import com.sun.javafx.tk.Toolkit;
+import controllers.PlayWindowController;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.CycleMethod;
@@ -14,13 +15,21 @@ import java.awt.event.MouseEvent;
 
 public class GotYa extends Mode {
     private Circle circle;
-    double circleSpeed = 3;
+    private double circleSpeed;
+    private int circleAgility;
+    private int halfCircleAgility;
+    private double circleSize;
+    private double lastX;
+    private double lastY;
 
-    public GotYa(Canvas canvas, double circleSpeed) {
-        super(canvas);
+    public GotYa(PlayWindowController playWindowController, double circleSpeed, double circleAgility, double circleSize) {
+        super(playWindowController);
         this.circleSpeed = circleSpeed;
+        this.halfCircleAgility = (int)circleAgility / 2;
+        this.circleAgility = (int)circleAgility + 1;
+        this.circleSize = circleSize;
 
-        circle = new Circle(canvasX / 2, canvasY / 2, 30,  Math.abs(random.nextInt() % 360),
+        circle = new Circle(canvasX / 2, canvasY / 2, circleSize,  Math.abs(random.nextInt() % 360),
                 new RadialGradient(0.63, 0.58, 0.7, 0.7,
                 0.63, true, CycleMethod.NO_CYCLE, stops));
 
@@ -34,14 +43,14 @@ public class GotYa extends Mode {
 
     private void moveCircle(){
         while(alive.get()){
-            synchronized (circle) {
+            synchronized(circle) {
                 double circleX = circle.getX();
                 double circleY = circle.getY();
                 double circleR = circle.getR();
 
                 if(circle.getDecreasedChangeDirectionDelay() <= 0) {
-                    circle.setDirection(random.nextInt(91) - 46);
-                    circle.setChangeDirectionDelay(random.nextInt(101));
+                    circle.setDirection(random.nextInt(circleAgility) - halfCircleAgility);
+                    circle.setChangeDirectionDelay(random.nextInt(circleAgility));
                 }
 
                 if (circleX <= circleR) {
@@ -72,14 +81,15 @@ public class GotYa extends Mode {
             double circleY;
             double circleR;
 
-            synchronized (circle){
+            synchronized(circle){
                 circleX = circle.getX();
                 circleY = circle.getY();
                 circleR = circle.getR();
             }
 
             Platform.runLater(() -> {
-                graphicsContext.clearRect(0, 0, canvasX, canvasY);
+                graphicsContext.clearRect(circleX - circleR / 2 - 20, circleY - circleR / 2 - 20,
+                        circleX - circleR / 2 + 40, circleY - circleR / 2 + 40);
                 graphicsContext.setFill(circle.getColor());
                 graphicsContext.fillOval(circleX - circleR / 2, circleY - circleR / 2,
                         circleR, circleR);
@@ -94,10 +104,19 @@ public class GotYa extends Mode {
     //inside the circle
     private void checkIfInside2(){
         while(alive.get()) {
-            System.out.println(MouseInfo.getPointerInfo().getLocation());
+            synchronized(circle){
+                if (Math.sqrt(Math.pow((circle.getX() - lastX), 2) + Math.pow((circle.getY() - lastY), 2)) <= circle.getR() / 2) {
+                    circle.setColor(new RadialGradient(0.63, 0.58, 0.7, 0.7,
+                            0.63, true, CycleMethod.NO_CYCLE, stops2));
+                }
+                else{
+                    circle.setColor(new RadialGradient(0.63, 0.58, 0.7, 0.7,
+                            0.63, true, CycleMethod.NO_CYCLE, stops));
+                }
+            }
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -105,7 +124,9 @@ public class GotYa extends Mode {
     }
 
     public void checkIfInside(double x, double y){
-        synchronized (circle) {
+        synchronized(circle) {
+            lastX = x;
+            lastY = y;
             if (Math.sqrt(Math.pow((circle.getX() - x), 2) + Math.pow((circle.getY() - y), 2)) <= circle.getR() / 2) {
                 circle.setColor(new RadialGradient(0.63, 0.58, 0.7, 0.7,
                         0.63, true, CycleMethod.NO_CYCLE, stops2));

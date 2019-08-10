@@ -1,6 +1,7 @@
 package Modes;
 
 import Data.Circle;
+import controllers.PlayWindowController;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -15,13 +16,13 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Mode {
+    protected PlayWindowController playWindowController;
     protected final List<Circle> arrayListCircles = Collections.synchronizedList(new ArrayList<Circle>());
     protected int canvasX;
     protected int canvasY;
     protected int totalCircles;
     protected int hitCircles;
     protected double hitRatio;
-    protected int spawnTime;
     protected double averageHitTime;
     protected AtomicBoolean alive = new AtomicBoolean(true);
     protected Random random = new Random();
@@ -33,15 +34,15 @@ public class Mode {
     protected ExecutorService executor2 = Executors.newFixedThreadPool(1);
     protected ExecutorService executor3 = Executors.newFixedThreadPool(1);
 
-    public Mode(Canvas canvas){
-        this.canvasX = (int)canvas.getWidth();
-        this.canvasY = (int)canvas.getHeight();
-        this.graphicsContext = canvas.getGraphicsContext2D();
+    public Mode(PlayWindowController playWindowController){
+        this.playWindowController = playWindowController;
+        this.canvasX = (int)playWindowController.getCanvas().getWidth();
+        this.canvasY = (int)playWindowController.getCanvas().getHeight();
+        this.graphicsContext = playWindowController.getCanvas().getGraphicsContext2D();
 
         totalCircles = 0;
         hitCircles = 0;
         hitRatio = 0;
-        spawnTime = 1000;
         averageHitTime = 0;
     }
 
@@ -51,6 +52,13 @@ public class Mode {
 
     public void setAlive(boolean alive) {
         this.alive.set(alive);
+        new Thread(() -> {
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+            }
+            graphicsContext.clearRect(0, 0, canvasX, canvasY);
+        }).start();
     }
 
 }
