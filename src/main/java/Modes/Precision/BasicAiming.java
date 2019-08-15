@@ -64,8 +64,7 @@ public class BasicAiming extends Mode {
                 graphicsContext.clearRect(0, 0, canvasX, canvasY);
                 synchronized (arrayListCircles) {
                     for (Circle c : arrayListCircles) {
-                        graphicsContext.setFill(c.getColor());
-                        graphicsContext.fillOval(c.getX() - c.getR() / 2, c.getY() - c.getR() / 2, c.getR(), c.getR());
+                        c.paint(graphicsContext);
                     }
                 }
             });
@@ -78,12 +77,18 @@ public class BasicAiming extends Mode {
     }
 
     public void checkIfHit(double x, double y) {
+        boolean hit = false;
         synchronized (arrayListCircles) {
             for (Circle c : arrayListCircles)
                 if (Math.sqrt(Math.pow((c.getX() - x), 2) + Math.pow((c.getY() - y), 2)) <= c.getR() / 2) {
                     arrayListCircles.remove(c);
+                    hit = true;
                     break;
                 }
+        }
+        if (!hit) {
+            missedHits++;
+            Platform.runLater(() -> playWindowController.getLabelResult2Value().setText("" + missedHits));
         }
     }
 }

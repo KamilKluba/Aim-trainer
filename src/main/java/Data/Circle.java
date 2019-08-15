@@ -1,7 +1,11 @@
 package Data;
 
+import javafx.application.Platform;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 
 import java.util.Random;
 
@@ -26,6 +30,13 @@ public class Circle {
         this.shiftY = Math.cos(Math.PI / 180 * direction) / 2;
         this.changeDirectionDelay = 0;
         this.color = color;
+    }
+
+    public void paint(GraphicsContext graphicsContext){
+        Platform.runLater(() -> {
+            graphicsContext.setFill(color);
+            graphicsContext.fillOval(x - r / 2, y - r / 2, r, r);
+        });
     }
 
     public double getX() {
@@ -68,8 +79,9 @@ public class Circle {
         return color;
     }
 
-    public void setColor(RadialGradient color) {
-        this.color = color;
+    public void setColor(Stop[] stops) {
+        this.color = new RadialGradient(0.63, 0.58, 0.7, 0.7,
+                0.63, true, CycleMethod.NO_CYCLE, stops);
     }
 
     public boolean isRising() {

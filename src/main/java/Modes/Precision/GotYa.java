@@ -74,7 +74,6 @@ public class GotYa extends Mode {
                 Thread.sleep(5);
             }catch(InterruptedException e){e.printStackTrace();}
         }
-        circle.setX(-100);
     }
 
     private void drawCircle(){
@@ -89,6 +88,7 @@ public class GotYa extends Mode {
                 circleR = circle.getR();
             }
 
+            //not using circle.paint(gc) because this way circle is faster available for other threads
             Platform.runLater(() -> {
                 graphicsContext.clearRect(circleX - circleR / 2 - 20, circleY - circleR / 2 - 20,
                         circleX - circleR + 40, circleY - circleR + 40);
@@ -108,12 +108,10 @@ public class GotYa extends Mode {
         while(alive.get()) {
             synchronized(circle){
                 if (Math.sqrt(Math.pow((circle.getX() - lastX), 2) + Math.pow((circle.getY() - lastY), 2)) <= circle.getR() / 2) {
-                    circle.setColor(new RadialGradient(0.63, 0.58, 0.7, 0.7,
-                            0.63, true, CycleMethod.NO_CYCLE, stops2));
+                    circle.setColor(stops2);
                 }
                 else{
-                    circle.setColor(new RadialGradient(0.63, 0.58, 0.7, 0.7,
-                            0.63, true, CycleMethod.NO_CYCLE, stops));
+                    circle.setColor(stops);
                 }
             }
 
@@ -126,23 +124,20 @@ public class GotYa extends Mode {
     }
 
     public void checkIfInside(double x, double y){
-        synchronized(circle) {
+        synchronized (circle) {
             lastX = x;
             lastY = y;
             if (Math.sqrt(Math.pow((circle.getX() - x), 2) + Math.pow((circle.getY() - y), 2)) <= circle.getR() / 2) {
-                circle.setColor(new RadialGradient(0.63, 0.58, 0.7, 0.7,
-                        0.63, true, CycleMethod.NO_CYCLE, stops2));
+                circle.setColor(stops2);
                 currentGain += 0.01;
                 score += currentGain;
-            }
-            else{
-                circle.setColor(new RadialGradient(0.63, 0.58, 0.7, 0.7,
-                        0.63, true, CycleMethod.NO_CYCLE, stops));
+            } else {
+                circle.setColor(stops);
                 currentGain = 1;
             }
         }
         Platform.runLater(() -> playWindowController.getLabelResult1Value().setText("" + decimalFormatScore.format(score)));
-        if(currentGain > highestGain){
+        if (currentGain > highestGain) {
             Platform.runLater(() -> playWindowController.getLabelResult2Value().setText("" + decimalFormatHighestGain.format(highestGain)));
             highestGain = currentGain;
         }

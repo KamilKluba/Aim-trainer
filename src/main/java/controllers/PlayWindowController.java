@@ -5,10 +5,7 @@ import Data.Point;
 import Data.WindowSize;
 import Main.Main;
 import Modes.Mode;
-import Modes.Precision.AimingOnTime;
-import Modes.Precision.AnotherOneBitesTheDust;
-import Modes.Precision.BasicAiming;
-import Modes.Precision.GotYa;
+import Modes.Precision.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -58,6 +55,8 @@ public class PlayWindowController {
     @FXML private Label labelResult1Value;
     @FXML private Label labelResult2Info;
     @FXML private Label labelResult2Value;
+    @FXML private Label labelResult3Info;
+    @FXML private Label labelResult3Value;
     @FXML private Label labelCountdown;
 
     public void initialize(){
@@ -94,6 +93,7 @@ public class PlayWindowController {
                     e.printStackTrace();
                 }
             }
+            clearMouseListeners();
             chosenMode.setAlive(false);
         });
         arrayListOptionsComponents.add(sliderModeOptions1);
@@ -109,6 +109,8 @@ public class PlayWindowController {
         arrayListResultComponents.add(labelResult1Value);
         arrayListResultComponents.add(labelResult2Info);
         arrayListResultComponents.add(labelResult2Value);
+        arrayListResultComponents.add(labelResult3Info);
+        arrayListResultComponents.add(labelResult3Value);
     }
 
     public void myInitialize(Main main){
@@ -237,6 +239,8 @@ public class PlayWindowController {
         for(javafx.scene.Node n : arrayListOptionsComponents){
             n.setDisable(false);
         }
+
+        clearMouseListeners();
         buttonStart.setDisable(false);
     }
 
@@ -261,29 +265,39 @@ public class PlayWindowController {
             }
             labelCountdown.setVisible(false);
 
-            anchorPane.setOnMouseMoved(null);
-            anchorPane.setOnMouseClicked(null);
-            anchorPane.setOnMouseDragged(null);
+            clearMouseListeners();
 
             if (modeName.equals("buttonPrecision1")) {
                 chosenMode = new BasicAiming(this, sliderModeOptions1.getValue());
-                anchorPane.setOnMouseClicked(event -> ((BasicAiming) chosenMode).checkIfHit(event.getX(), event.getY()));
+                anchorPane.setOnMousePressed(event -> ((BasicAiming) chosenMode).checkIfHit(event.getX(), event.getY()));
             } else if (modeName.equals("buttonPrecision2")) {
                 chosenMode = new AimingOnTime(this, sliderModeOptions1.getValue(), sliderModeOptions2.getValue());
-                anchorPane.setOnMouseClicked(event -> ((AimingOnTime) chosenMode).checkIfHit(event.getX(), event.getY()));
+                anchorPane.setOnMousePressed(event -> ((AimingOnTime) chosenMode).checkIfHit(event.getX(), event.getY()));
             } else if (modeName.equals("buttonPrecision3")) {
                 chosenMode = new GotYa(this, sliderModeOptions1.getValue(), sliderModeOptions2.getValue() * 10, sliderModeOptions3.getValue());
                 anchorPane.setOnMouseMoved(event -> ((GotYa) chosenMode).checkIfInside(event.getX(), event.getY()));
                 anchorPane.setOnMouseDragged(event -> ((GotYa) chosenMode).checkIfInside(-100, -100));
             } else if (modeName.equals("buttonPrecision4")) {
                 chosenMode = new AnotherOneBitesTheDust(this, sliderModeOptions1.getValue());
-                anchorPane.setOnMouseClicked(event -> ((AnotherOneBitesTheDust) chosenMode).checkIfHit(event.getX(), event.getY()));
+                anchorPane.setOnMousePressed(event -> ((AnotherOneBitesTheDust) chosenMode).checkIfHit(event.getX(), event.getY()));
+            } else if (modeName.equals("buttonPrecision5")){
+                chosenMode = new Sniper(this, sliderModeOptions1.getValue(), sliderModeOptions2.getValue());
+                anchorPane.setOnMousePressed(event -> ((Sniper) chosenMode).checkIfHit(event.getX(), event.getY()));
+            } else if (modeName.equals("buttonPrecision6")){
+                chosenMode = new StayWithMe(this, sliderModeOptions1.getValue());
             }
 
             buttonCancel.setDisable(false);
             alive.set(true);
             executor.submit(start);
         }).start();
+    }
+
+    private void clearMouseListeners(){
+        anchorPane.setOnMouseMoved(null);
+        anchorPane.setOnMouseClicked(null);
+        anchorPane.setOnMouseDragged(null);
+        anchorPane.setOnMousePressed(null);
     }
 
     public void prepareMode(String modeName){
@@ -311,6 +325,11 @@ public class PlayWindowController {
             labelResult1Info.setVisible(true);
             labelResult1Value.setText("0");
             labelResult1Value.setVisible(true);
+            //labelR2 is responsible for total missed hits
+            labelResult2Info.textProperty().bind(I18N.createStringBinding("labelResultMissedHits"));
+            labelResult2Info.setVisible(true);
+            labelResult2Value.setText("0");
+            labelResult2Value.setVisible(true);
         }
         else if(modeName.equals("buttonPrecision2")){
             //slider1 is responsible for circle spawn time
@@ -345,6 +364,11 @@ public class PlayWindowController {
             labelResult2Info.setVisible(true);
             labelResult2Value.setText("0");
             labelResult2Value.setVisible(true);
+            //labelR3 is responsible for total missed hits
+            labelResult3Info.textProperty().bind(I18N.createStringBinding("labelResultMissedHits"));
+            labelResult3Info.setVisible(true);
+            labelResult3Value.setText("0");
+            labelResult3Value.setVisible(true);
         }
         else if(modeName.equals("buttonPrecision3")) {
             //slider1 is responsible for circle speed
@@ -408,6 +432,58 @@ public class PlayWindowController {
             labelResult1Info.setVisible(true);
             labelResult1Value.setText("0");
             labelResult1Value.setVisible(true);
+            //labelR2 is responsible for total missed hits
+            labelResult2Info.textProperty().bind(I18N.createStringBinding("labelResultMissedHits"));
+            labelResult2Info.setVisible(true);
+            labelResult2Value.setText("0");
+            labelResult2Value.setVisible(true);
+        }
+        else if(modeName.equals("buttonPrecision5")){
+            //slider1 is responsible for circle size
+            sliderModeOptions1.setMin(10);
+            sliderModeOptions1.setMax(50);
+            sliderModeOptions1.setValue(30);
+            sliderModeOptions1.setMajorTickUnit(5);
+            sliderModeOptions1.valueProperty().addListener((obs, oldValue, newValue) -> labelModeOptions1Value.setText("" + newValue.intValue()));
+            sliderModeOptions1.setVisible(true);
+            labelModeOptions1Value.setText("30");
+            labelModeOptions1Value.setVisible(true);
+            labelModeOptions1Info.textProperty().bind(I18N.createStringBinding("labelCircleSizeInfo"));
+            labelModeOptions1Info.setVisible(true);
+            //slider2 is responsible for circle speed
+            sliderModeOptions2.setMin(1);
+            sliderModeOptions2.setMax(5);
+            sliderModeOptions2.setValue(3);
+            sliderModeOptions2.setMajorTickUnit(1);
+            sliderModeOptions2.valueProperty().addListener((obs, oldValue, newValue) -> labelModeOptions2Value.setText("" + newValue.intValue()));
+            sliderModeOptions2.setVisible(true);
+            labelModeOptions2Value.setText("3");
+            labelModeOptions2Value.setVisible(true);
+            labelModeOptions2Info.textProperty().bind(I18N.createStringBinding("labelCircleSpeedInfo"));
+            labelModeOptions2Info.setVisible(true);
+            //labelR1 is responsible for the amount of hit circles;
+            labelResult1Info.textProperty().bind(I18N.createStringBinding("labelResultHitCircles"));
+            labelResult1Info.setVisible(true);
+            labelResult1Value.setText("0");
+            labelResult1Value.setVisible(true);
+            //labelR2 is responsible for total missed hits
+            labelResult2Info.textProperty().bind(I18N.createStringBinding("labelResultMissedHits"));
+            labelResult2Info.setVisible(true);
+            labelResult2Value.setText("0");
+            labelResult2Value.setVisible(true);
+        }
+        else if(modeName.equals("buttonPrecision6")){
+            //slider1 is responsible for circle size
+            sliderModeOptions1.setMin(10);
+            sliderModeOptions1.setMax(50);
+            sliderModeOptions1.setValue(30);
+            sliderModeOptions1.setMajorTickUnit(5);
+            sliderModeOptions1.valueProperty().addListener((obs, oldValue, newValue) -> labelModeOptions1Value.setText("" + newValue.intValue()));
+            sliderModeOptions1.setVisible(true);
+            labelModeOptions1Value.setText("30");
+            labelModeOptions1Value.setVisible(true);
+            labelModeOptions1Info.textProperty().bind(I18N.createStringBinding("labelCircleSizeInfo"));
+            labelModeOptions1Info.setVisible(true);
         }
     }
 
@@ -421,5 +497,9 @@ public class PlayWindowController {
 
     public Label getLabelResult2Value() {
         return labelResult2Value;
+    }
+
+    public Label getLabelResult3Value() {
+        return labelResult3Value;
     }
 }

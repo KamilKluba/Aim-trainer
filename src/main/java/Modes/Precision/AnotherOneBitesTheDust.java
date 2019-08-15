@@ -10,7 +10,6 @@ import javafx.scene.paint.RadialGradient;
 
 public class AnotherOneBitesTheDust extends Mode {
     private Circle circle;
-    private int hitCircles = 0;
 
     public AnotherOneBitesTheDust(PlayWindowController playWindowController, double circleSize) {
         super(playWindowController);
@@ -19,8 +18,7 @@ public class AnotherOneBitesTheDust extends Mode {
                 new RadialGradient(0.63, 0.58, 0.7, 0.7,
                 0.63, true, CycleMethod.NO_CYCLE, stops));
 
-        graphicsContext.setFill(circle.getColor());
-        graphicsContext.fillOval(circle.getX() - circle.getR() / 2, circle.getY() - circle.getR() / 2, circle.getR(), circle.getR());
+        circle.paint(graphicsContext);
     }
 
     public void checkIfHit(double x, double y) {
@@ -28,9 +26,13 @@ public class AnotherOneBitesTheDust extends Mode {
             circle.setX(random.nextInt(canvasX - 60) + 30);
             circle.setY(random.nextInt(canvasY - 60) + 30);
             graphicsContext.clearRect(0, 0, canvasX, canvasY);
-            graphicsContext.fillOval(circle.getX() - circle.getR() / 2, circle.getY() - circle.getR() / 2, circle.getR(), circle.getR());
+            circle.paint(graphicsContext);
             hitCircles++;
             Platform.runLater(() -> playWindowController.getLabelResult1Value().setText("" + hitCircles));
+        }
+        else{
+            missedHits++;
+            Platform.runLater(() -> playWindowController.getLabelResult2Value().setText("" + missedHits));
         }
     }
 }

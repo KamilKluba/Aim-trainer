@@ -2,7 +2,6 @@ package Modes;
 
 import Data.Circle;
 import controllers.PlayWindowController;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Stop;
@@ -22,6 +21,7 @@ public class Mode {
     protected int canvasY;
     protected int totalCircles;
     protected int hitCircles;
+    protected int missedHits;
     protected double hitRatio;
     protected double averageHitTime;
     protected AtomicBoolean alive = new AtomicBoolean(true);
@@ -42,6 +42,7 @@ public class Mode {
 
         totalCircles = 0;
         hitCircles = 0;
+        missedHits = 0;
         hitRatio = 0;
         averageHitTime = 0;
     }
