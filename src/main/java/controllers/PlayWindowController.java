@@ -285,6 +285,9 @@ public class PlayWindowController {
                 anchorPane.setOnMousePressed(event -> ((Sniper) chosenMode).checkIfHit(event.getX(), event.getY()));
             } else if (modeName.equals("buttonPrecision6")){
                 chosenMode = new StayWithMe(this, sliderModeOptions1.getValue());
+                anchorPane.setOnMouseDragged(event -> ((StayWithMe) chosenMode).checkIfCircleIsOnLine(event.getX(), event.getY()));
+                anchorPane.setOnMousePressed(event -> ((StayWithMe) chosenMode).saveMousePosition(event.getX(), event.getY()));
+                anchorPane.setOnMouseReleased(event -> ((StayWithMe) chosenMode).resetCirclePosition());
             }
 
             buttonCancel.setDisable(false);
@@ -298,6 +301,7 @@ public class PlayWindowController {
         anchorPane.setOnMouseClicked(null);
         anchorPane.setOnMouseDragged(null);
         anchorPane.setOnMousePressed(null);
+        anchorPane.setOnMouseReleased(null);
     }
 
     public void prepareMode(String modeName){
@@ -484,6 +488,27 @@ public class PlayWindowController {
             labelModeOptions1Value.setVisible(true);
             labelModeOptions1Info.textProperty().bind(I18N.createStringBinding("labelCircleSizeInfo"));
             labelModeOptions1Info.setVisible(true);
+            //labelR1 is responsible for amount of loses
+            labelResult1Info.textProperty().bind(I18N.createStringBinding("labelResultDefeatsAmount"));
+            labelResult1Info.setVisible(true);
+            labelResult1Value.setText("0");
+            labelResult1Value.setVisible(true);
+            //labelR2 is responsible for amount of wins
+            labelResult2Info.textProperty().bind(I18N.createStringBinding("labelResultVictoriesAmount"));
+            labelResult2Info.setVisible(true);
+            labelResult2Value.setText("0");
+            labelResult2Value.setVisible(true);
+            //slider2 is responsible for lines amount
+            sliderModeOptions2.setMin(5);
+            sliderModeOptions2.setMax(15);
+            sliderModeOptions2.setValue(10);
+            sliderModeOptions2.setMajorTickUnit(2);
+            sliderModeOptions2.valueProperty().addListener((obs, oldValue, newValue) -> labelModeOptions2Value.setText("" + newValue.intValue()));
+            sliderModeOptions2.setVisible(true);
+            labelModeOptions2Value.setText("10");
+            labelModeOptions2Value.setVisible(true);
+            labelModeOptions2Info.textProperty().bind(I18N.createStringBinding("labelLinesAmount"));
+            labelModeOptions2Info.setVisible(true);
         }
     }
 

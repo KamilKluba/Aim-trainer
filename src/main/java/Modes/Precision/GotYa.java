@@ -90,8 +90,8 @@ public class GotYa extends Mode {
 
             //not using circle.paint(gc) because this way circle is faster available for other threads
             Platform.runLater(() -> {
-                graphicsContext.clearRect(circleX - circleR / 2 - 20, circleY - circleR / 2 - 20,
-                        circleX - circleR + 40, circleY - circleR + 40);
+                graphicsContext.clearRect(circleX - circleR, circleY - circleR,
+                        circleR * 2, circleR * 2);
                 graphicsContext.setFill(circle.getColor());
                 graphicsContext.fillOval(circleX - circleR / 2, circleY - circleR / 2,
                         circleR, circleR);

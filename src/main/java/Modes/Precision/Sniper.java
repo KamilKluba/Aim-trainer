@@ -47,7 +47,7 @@ public class Sniper extends Mode {
                 circle.setX(circleX + circle.getShiftX() * circleSpeed);
                 circle.setY(circleY + circle.getShiftY() * circleSpeed);
 
-                graphicsContext.clearRect(0, 0, canvasX, canvasY);
+                Platform.runLater(() -> graphicsContext.clearRect(0, 0, canvasX + 1, canvasY + 1));
                 circle.paint(graphicsContext);
             }
             try{

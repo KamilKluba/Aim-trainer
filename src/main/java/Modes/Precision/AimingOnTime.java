@@ -74,7 +74,7 @@ public class AimingOnTime extends Mode {
     private void drawCircles(){
         while (alive.get()) {
             Platform.runLater(() -> {
-                graphicsContext.clearRect(0, 0, canvasX, canvasY);
+                graphicsContext.clearRect(0, 0, canvasX + 1, canvasY + 1);
                 synchronized (arrayListCircles) {
                     for (Circle c : arrayListCircles) {
                         c.paint(graphicsContext);

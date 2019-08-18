@@ -25,7 +25,7 @@ public class AnotherOneBitesTheDust extends Mode {
         if (Math.sqrt(Math.pow((circle.getX() - x), 2) + Math.pow((circle.getY() - y), 2)) <= circle.getR() / 2) {
             circle.setX(random.nextInt(canvasX - 60) + 30);
             circle.setY(random.nextInt(canvasY - 60) + 30);
-            graphicsContext.clearRect(0, 0, canvasX, canvasY);
+            graphicsContext.clearRect(0, 0, canvasX + 1, canvasY + 1);
             circle.paint(graphicsContext);
             hitCircles++;
             Platform.runLater(() -> playWindowController.getLabelResult1Value().setText("" + hitCircles));
