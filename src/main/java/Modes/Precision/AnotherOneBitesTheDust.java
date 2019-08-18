@@ -4,7 +4,6 @@ import Data.Circle;
 import Modes.Mode;
 import controllers.PlayWindowController;
 import javafx.application.Platform;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.RadialGradient;
 
@@ -16,7 +15,7 @@ public class AnotherOneBitesTheDust extends Mode {
 
         circle = new Circle(canvasX / 2, canvasY / 2, circleSize, -1,
                 new RadialGradient(0.63, 0.58, 0.7, 0.7,
-                0.63, true, CycleMethod.NO_CYCLE, stops));
+                0.63, true, CycleMethod.NO_CYCLE, stops0));
 
         circle.paint(graphicsContext);
     }

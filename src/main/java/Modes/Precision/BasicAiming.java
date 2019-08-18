@@ -4,7 +4,6 @@ import Data.Circle;
 import Modes.Mode;
 import controllers.PlayWindowController;
 import javafx.application.Platform;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.RadialGradient;
 
@@ -30,7 +29,7 @@ public class BasicAiming extends Mode {
                 arrayListCircles.add(new Circle(30 + Math.abs(random.nextInt() % (canvasX - 60)),
                         30 + Math.abs(random.nextInt() % (canvasY - 60)),
                         0, -1, new RadialGradient(0.63, 0.58, 0.7, 0.7,
-                        0.63, true, CycleMethod.NO_CYCLE, stops)));
+                        0.63, true, CycleMethod.NO_CYCLE, stops0)));
             }
             totalCircles++;
             Platform.runLater(() -> playWindowController.getLabelResult1Value().setText("" + totalCircles));

@@ -17,7 +17,7 @@ public class Sniper extends Mode {
 
         circle = new Circle(canvasX / 2, canvasY / 2, circleSize, -1,
                 new RadialGradient(0.63, 0.58, 0.7, 0.7,
-                        0.63, true, CycleMethod.NO_CYCLE, stops));
+                        0.63, true, CycleMethod.NO_CYCLE, stops0));
 
         circle.paint(graphicsContext);
 

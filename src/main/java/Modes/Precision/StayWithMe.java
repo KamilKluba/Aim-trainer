@@ -15,70 +15,93 @@ public class StayWithMe extends Mode {
     private Circle circle;
     private ArrayList<Line> arrayListLines = new ArrayList<Line>();
     private double circleSize;
+    private int linesAmount;
     private double mouseX;
     private double mouseY;
     private boolean isOutOfLine = false;
+    private boolean won = false;
     private int defeatsAmount = 0;
     private int victoriesAmount = 0;
+    private int currentIndex = 0;
 
-    public StayWithMe(PlayWindowController playWindowController, double circleSize) {
+    public StayWithMe(PlayWindowController playWindowController, double circleSize, int linesAmount) {
         super(playWindowController);
         this.circleSize = circleSize;
+        this.linesAmount = linesAmount;
 
         circle = new Circle(100, canvasY / 2, circleSize, -1,
                 new RadialGradient(0.63, 0.58, 0.7, 0.7,
-                        0.63, true, CycleMethod.NO_CYCLE, stops));
-        circle.paint(graphicsContext);
+                        0.63, true, CycleMethod.NO_CYCLE, stops0));
+        createLines();
+    }
 
+    private void createLines(){
+        arrayListLines.clear();
+        Platform.runLater(() -> graphicsContext.clearRect(0, 0, canvasX + 1, canvasY + 1));
+        circle.paint(graphicsContext);
 
         boolean lineUp = random.nextBoolean();
         int currentX = 100;
         int currentY = canvasY / 2;
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < linesAmount; i++){
             if(arrayListLines.size() % 2 == 0){
                 int nextY;
                 if(!lineUp){
                     nextY = random.nextInt(currentY - 150) + 100;
                 }
                 else{
-                    nextY = random.nextInt(canvasY - currentY - 150) + 100 + currentY;
+                    nextY = random.nextInt(Math.abs(canvasY - currentY - 150)) + 100 + currentY;
                 }
-                arrayListLines.add(new Line(currentX, currentY, currentX, nextY));
+                arrayListLines.add(new Line(i, currentX, currentY, currentX, nextY));
                 currentY = nextY;
                 lineUp = !lineUp;
             }
             else{
                 //canvasX - currentX
-                int nextX = random.nextInt(100) + 100 + currentX;
-                arrayListLines.add(new Line(currentX, currentY, nextX, currentY));
+                int nextX;
+                if(i + 2 >= linesAmount)
+                    nextX = canvasX - 100;
+                else
+                    nextX = random.nextInt(canvasX - 200) / linesAmount + currentX + 50 + (int)circleSize / 5;
+                arrayListLines.add(new Line(i, currentX, currentY, nextX, currentY));
                 currentX = nextX;
             }
         }
         //arrayListLines.add(new Line(100, canvasY / 2, 700, 500));
-        for(Line line : arrayListLines) {
-            Platform.runLater(() -> {
+        Platform.runLater(() -> {
+            for(Line line : arrayListLines) {
                 graphicsContext.setStroke(Color.WHITE);
                 graphicsContext.strokeLine(line.x1, line.y1, line.x2, line.y2);
-            });
-        }
+            }
+        });
     }
 
     public void checkIfCircleIsOnLine(double x, double y){
         if(!isOutOfLine) {
             boolean isInside = false;
             for (Line l : arrayListLines) {
-                if (l.isOnTheLine(circle.getX(), circle.getY(), circleSize)) {
-                    isInside = true;
-                    break;
+                if(l.index == linesAmount - 1) {
+                    if (l.isOnTheEnd(circle.getX(), circle.getY(), circleSize)) {
+                        circle.setColor(stops2);
+                        won = true;
+                        isOutOfLine = true;
+                        break;
+                    }
                 }
+                if(l.index == currentIndex + 1 || l.index == currentIndex || l.index == currentIndex - 1)
+                    if (l.isOnTheLine(circle.getX(), circle.getY(), circleSize)) {
+                        isInside = true;
+                        currentIndex = l.index;
+                        break;
+                    }
             }
-
-            if (isInside) {
-                circle.setColor(stops);
-            } else {
-                circle.setColor(stops2);
+            if (isInside && !won) {
+                circle.setColor(stops0);
+            } else if (!isInside && !won){
+                circle.setColor(stops1);
                 isOutOfLine = true;
-                defeatsAmount++;
+                if(!won)
+                    defeatsAmount++;
                 Platform.runLater(() -> playWindowController.getLabelResult1Value().setText("" + defeatsAmount));
             }
 
@@ -102,9 +125,10 @@ public class StayWithMe extends Mode {
 
     public void resetCirclePosition(){
         if(isOutOfLine) {
+            currentIndex = 0;
             circle.setX(100);
             circle.setY(canvasY / 2);
-            circle.setColor(stops);
+            circle.setColor(stops0);
             Platform.runLater(() -> graphicsContext.clearRect(0, 0, canvasX + 1, canvasY + 1));
             circle.paint(graphicsContext);
             for (Line l : arrayListLines) {
@@ -112,9 +136,17 @@ public class StayWithMe extends Mode {
             }
         }
         isOutOfLine = false;
+
+        if(won){
+            createLines();
+            victoriesAmount++;
+            Platform.runLater(() -> playWindowController.getLabelResult2Value().setText("" + victoriesAmount));
+        }
+        won = false;
     }
 
     private class Line{
+        int index;
         double x1;
         double y1;
         double x2;
@@ -125,7 +157,8 @@ public class StayWithMe extends Mode {
         boolean horizontal;
         boolean vertical;
 
-        public Line(double x1, double y1, double x2, double y2){
+        public Line(int index, double x1, double y1, double x2, double y2){
+            this.index = index;
             this.x1 = x1;
             this.y1 = y1;
             this.x2 = x2;
@@ -178,6 +211,10 @@ public class StayWithMe extends Mode {
             }
 
             return isUnderX1 || isUnderX2 || isUnderTheLine;
+        }
+
+        public boolean isOnTheEnd(double x, double y, double r){
+            return Math.sqrt(Math.pow((x - x2), 2) + Math.pow((y - y2), 2)) < r / 2;
         }
 
         public void paint(GraphicsContext graphicsContext){

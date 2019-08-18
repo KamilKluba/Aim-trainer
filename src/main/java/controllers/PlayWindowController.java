@@ -95,6 +95,8 @@ public class PlayWindowController {
             }
             clearMouseListeners();
             chosenMode.setAlive(false);
+            for(javafx.scene.Node n : arrayListOptionsComponents) n.setDisable(false);
+            buttonStart.setDisable(false);
         });
         arrayListOptionsComponents.add(sliderModeOptions1);
         arrayListOptionsComponents.add(labelModeOptions1Value);
@@ -284,7 +286,7 @@ public class PlayWindowController {
                 chosenMode = new Sniper(this, sliderModeOptions1.getValue(), sliderModeOptions2.getValue());
                 anchorPane.setOnMousePressed(event -> ((Sniper) chosenMode).checkIfHit(event.getX(), event.getY()));
             } else if (modeName.equals("buttonPrecision6")){
-                chosenMode = new StayWithMe(this, sliderModeOptions1.getValue());
+                chosenMode = new StayWithMe(this, sliderModeOptions1.getValue(), (int)sliderModeOptions2.getValue());
                 anchorPane.setOnMouseDragged(event -> ((StayWithMe) chosenMode).checkIfCircleIsOnLine(event.getX(), event.getY()));
                 anchorPane.setOnMousePressed(event -> ((StayWithMe) chosenMode).saveMousePosition(event.getX(), event.getY()));
                 anchorPane.setOnMouseReleased(event -> ((StayWithMe) chosenMode).resetCirclePosition());

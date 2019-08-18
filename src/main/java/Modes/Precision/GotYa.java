@@ -32,7 +32,7 @@ public class GotYa extends Mode {
 
         circle = new Circle(canvasX / 2, canvasY / 2, circleSize,  Math.abs(random.nextInt() % 360),
                 new RadialGradient(0.63, 0.58, 0.7, 0.7,
-                0.63, true, CycleMethod.NO_CYCLE, stops));
+                0.63, true, CycleMethod.NO_CYCLE, stops0));
 
         Runnable moveCircle = (() -> moveCircle());
         Runnable drawCircle = (() -> drawCircle());
@@ -102,16 +102,16 @@ public class GotYa extends Mode {
         }
     }
 
-    //this method fixes a bug, where circle act like a mouse was inside it after the mouse stops moving being
+    //this method fixes a bug, where circle act like a mouse was inside it after the mouse stops0 moving being
     //inside the circle
     private void checkIfInside2(){
         while(alive.get()) {
             synchronized(circle){
                 if (Math.sqrt(Math.pow((circle.getX() - lastX), 2) + Math.pow((circle.getY() - lastY), 2)) <= circle.getR() / 2) {
-                    circle.setColor(stops2);
+                    circle.setColor(stops1);
                 }
                 else{
-                    circle.setColor(stops);
+                    circle.setColor(stops0);
                 }
             }
 
@@ -128,11 +128,11 @@ public class GotYa extends Mode {
             lastX = x;
             lastY = y;
             if (Math.sqrt(Math.pow((circle.getX() - x), 2) + Math.pow((circle.getY() - y), 2)) <= circle.getR() / 2) {
-                circle.setColor(stops2);
+                circle.setColor(stops1);
                 currentGain += 0.01;
                 score += currentGain;
             } else {
-                circle.setColor(stops);
+                circle.setColor(stops0);
                 currentGain = 1;
             }
         }

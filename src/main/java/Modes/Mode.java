@@ -27,8 +27,9 @@ public class Mode {
     protected AtomicBoolean alive = new AtomicBoolean(true);
     protected Random random = new Random();
     protected GraphicsContext graphicsContext = null;
-    protected Stop[] stops = new Stop[]{new Stop(0, Color.YELLOW), new Stop(1, Color.RED)};
-    protected Stop[] stops2 = new Stop[]{new Stop(0, Color.GREEN), new Stop(1, Color.BLUE)};
+    protected Stop[] stops0 = new Stop[]{new Stop(0, Color.YELLOW), new Stop(1, Color.RED)};
+    protected Stop[] stops1 = new Stop[]{new Stop(0, Color.GREEN), new Stop(1, Color.BLUE)};
+    protected Stop[] stops2 = new Stop[]{new Stop(0, Color.RED), new Stop(1, Color.BLACK)};
 
     protected ExecutorService executor1 = Executors.newFixedThreadPool(1);
     protected ExecutorService executor2 = Executors.newFixedThreadPool(1);
