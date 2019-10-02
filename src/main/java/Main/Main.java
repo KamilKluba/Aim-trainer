@@ -4,7 +4,6 @@ import Data.WindowSize;
 import controllers.MainWindowController;
 import controllers.PlayWindowController;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
@@ -15,6 +14,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.*;
 import java.util.ResourceBundle;
 
 public class Main extends Application{
@@ -29,14 +29,15 @@ public class Main extends Application{
     private PlayWindowController playWindowController;
     boolean fullscreen;
 
+
     public static void main(String args[]){
         launch(args);
     }
 
-
     public void start(Stage primaryStage) throws Exception {
         System.getProperty("file.encoding", "UTF-8");
         ResourceBundle resourceBundle = ResourceBundle.getBundle("messages");
+        javafx.scene.text.Font.loadFont(Main.class.getResourceAsStream("/fonts/Bank Gothic Medium BT.ttf"), 0);
 
         FXMLLoader loaderMainWindow = new FXMLLoader(getClass().getResource("/fxml/MainWindow.fxml"));
         loaderMainWindow.setResources(resourceBundle);

@@ -29,9 +29,7 @@ public class StayWithMe extends Mode {
         this.circleSize = circleSize;
         this.linesAmount = linesAmount;
 
-        circle = new Circle(100, canvasY / 2, circleSize, -1,
-                new RadialGradient(0.63, 0.58, 0.7, 0.7,
-                        0.63, true, CycleMethod.NO_CYCLE, stops0));
+        circle = new Circle(100, canvasY / 2, circleSize, -1, stops0);
         createLines();
     }
 

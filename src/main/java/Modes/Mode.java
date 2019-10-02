@@ -2,6 +2,7 @@ package Modes;
 
 import Data.Circle;
 import controllers.PlayWindowController;
+import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Stop;
@@ -41,6 +42,12 @@ public class Mode {
         this.canvasY = (int)playWindowController.getCanvas().getHeight();
         this.graphicsContext = playWindowController.getCanvas().getGraphicsContext2D();
 
+        Platform.runLater(() -> {
+            this.playWindowController.getLabelResult1Value().setText("0");
+            this.playWindowController.getLabelResult2Value().setText("0");
+            this.playWindowController.getLabelResult3Value().setText("0");
+        });
+
         totalCircles = 0;
         hitCircles = 0;
         missedHits = 0;
@@ -59,7 +66,7 @@ public class Mode {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
             }
-            graphicsContext.clearRect(0, 0, canvasX, canvasY);
+            graphicsContext.clearRect(0, 0, canvasX + 1, canvasY + 1);
         }).start();
     }
 

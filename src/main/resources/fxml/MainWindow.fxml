@@ -18,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?language javascript?>
 
-<Pane fx:id="pane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainWindowController">
+<Pane fx:id="pane" stylesheets="@../CSS/Window/MainWindow.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainWindowController">
    <children>
       <TabPane fx:id="tabPane" blendMode="COLOR_BURN" prefHeight="576.0" prefWidth="1024.0" rotateGraphic="true" style="-fx-background-size: stretch;" styleClass="background_image" stylesheets="@../CSS/Window/MainWindow.css" tabClosingPolicy="UNAVAILABLE">
          <tabs>

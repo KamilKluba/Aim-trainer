@@ -2,12 +2,9 @@ package Data;
 
 import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
-
-import java.util.Random;
 
 public class Circle {
     private double x;
@@ -19,9 +16,8 @@ public class Circle {
     private int changeDirectionDelay;
     private RadialGradient color;
     private boolean isRising = true;
-    private boolean isOut = false;
 
-    public Circle(double x, double y, double r, int direction, RadialGradient color) {
+    public Circle(double x, double y, double r, int direction, Stop[] color) {
         this.x = x;
         this.y = y;
         this.r = r;
@@ -29,7 +25,7 @@ public class Circle {
         this.shiftX = Math.sin(Math.PI / 180 * direction) / 2;
         this.shiftY = Math.cos(Math.PI / 180 * direction) / 2;
         this.changeDirectionDelay = 0;
-        this.color = color;
+        setColor(color);
     }
 
     public void paint(GraphicsContext graphicsContext){
@@ -107,13 +103,5 @@ public class Circle {
 
     public void setChangeDirectionDelay(int changeDirectionDelay) {
         this.changeDirectionDelay = changeDirectionDelay;
-    }
-
-    public boolean isOut() {
-        return isOut;
-    }
-
-    public void setOut(boolean out) {
-        isOut = out;
     }
 }

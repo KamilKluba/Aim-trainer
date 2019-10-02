@@ -30,9 +30,7 @@ public class GotYa extends Mode {
         this.circleAgility = (int)circleAgility + 1;
         this.circleSize = circleSize;
 
-        circle = new Circle(canvasX / 2, canvasY / 2, circleSize,  Math.abs(random.nextInt() % 360),
-                new RadialGradient(0.63, 0.58, 0.7, 0.7,
-                0.63, true, CycleMethod.NO_CYCLE, stops0));
+        circle = new Circle(canvasX / 2, canvasY / 2, circleSize,  Math.abs(random.nextInt() % 360), stops0);
 
         Runnable moveCircle = (() -> moveCircle());
         Runnable drawCircle = (() -> drawCircle());

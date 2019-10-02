@@ -2,6 +2,7 @@ package controllers;
 
 import Data.I18N;
 import Data.Question;
+import Data.ResizeValues;
 import Data.WindowSize;
 import Main.Main;
 import javafx.collections.FXCollections;
@@ -19,7 +20,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -264,53 +264,42 @@ public class MainWindowController {
     }
 
     public void resizeWindow(double windowWidth, double windowHeight) {
+        ResizeValues resizeValues = new ResizeValues(windowWidth, windowHeight);
+
         windowSize.setHeight(windowHeight);
         windowSize.setWidth(windowWidth);
         tabPane.setPrefSize(windowWidth, windowHeight);
 
-        double fontSize = 5 + (windowHeight + windowWidth) / 150;
-        double padW30 = windowWidth / 34.13;
-        double padW50 = windowWidth / 20.48;
-        double padW100 = windowWidth / 10.24;
-        double padW150 = windowWidth / 6.827;
-        double padH15 = windowHeight / 38.4;
-        double padH25 = windowHeight / 23.04;
-        double padH30 = windowHeight / 19.2;
-        double padH50 = windowHeight / 11.52;
-        double flagSizes = windowWidth / 16;
-        double tableW = windowWidth / 2.56;
-        double tableH = windowHeight / 1.92;
-
-        buttonExit.setLayoutX(windowWidth - 40);
-        buttonExit.setLayoutY(10);
-        buttonFullscreen.setLayoutX(windowWidth - 80);
-        buttonFullscreen.setLayoutY(10);
-        buttonMinimize.setLayoutX(windowWidth - 120);
-        buttonMinimize.setLayoutY(10);
+        buttonExit.setLayoutX(windowWidth - resizeValues.getButtonExitPadW() - 30);
+        buttonExit.setLayoutY(resizeValues.getButtonsBarPadH());
+        buttonFullscreen.setLayoutX(windowWidth - resizeValues.getButtonMaximizePadW() - 30);
+        buttonFullscreen.setLayoutY(resizeValues.getButtonsBarPadH());
+        buttonMinimize.setLayoutX(windowWidth - resizeValues.getButtonMinimizePadW() - 30);
+        buttonMinimize.setLayoutY(resizeValues.getButtonsBarPadH());
 
         for(HBox h : arrayListHBoxes)h.setSpacing((windowWidth - 1024) / 21 + 30);
         for(Button b : arrayListButtons) {
             b.setPrefSize(windowWidth / 1024 * 200, windowHeight / 576 * 100);
-            b.setFont(new Font("Bank Gothic Medium BT", fontSize));
+            b.setFont(new Font("Bank Gothic Medium BT", resizeValues.getFontSize()));
         }
         for(Button b : arrayListOptionsButtons) {
-            b.setFont(new Font("Bank Gothic Medium BT", fontSize));
+            b.setFont(new Font("Bank Gothic Medium BT", resizeValues.getFontSize()));
         }
 
         for(Label l : arrayListLabels)
-            l.setFont(new Font("Bank Gothic Medium BT", fontSize));
+            l.setFont(new Font("Bank Gothic Medium BT", resizeValues.getFontSize()));
 
-        labelLanguage.setPadding(new Insets(padH50, 0, 0, padW50));
-        hBoxOptions0000.setPadding(new Insets(0, 0, 0, padW50));
-        radioButtonPolish.setPadding(new Insets(0, 0, 0, padW50));
-        labelPolishFlag.setPrefSize(flagSizes, flagSizes);
-        radioButtonEnglish.setPadding(new Insets(0, 0, 0, padW30));
-        labelEnglishFlag.setPrefSize(flagSizes, flagSizes);
-        vBoxOptions001.setPadding(new Insets(padH50, 0, 0, 0));
-        labelWindowSize.setPadding(new Insets(0, 0, 0, padW50));
-        hBoxOptions0010.setPadding(new Insets(padH15, 0, 0, padW100));
-        comboBoxWindowSize.setPrefWidth(padW150);
-        comboBoxWindowSize.setStyle("-fx-font: " + (fontSize - 2) + "\"Bank Gothic Medium BT\";");
+        labelLanguage.setPadding(new Insets(resizeValues.getPadH50(), 0, 0, resizeValues.getPadW50()));
+        hBoxOptions0000.setPadding(new Insets(0, 0, 0, resizeValues.getPadW50()));
+        radioButtonPolish.setPadding(new Insets(0, 0, 0, resizeValues.getPadW50()));
+        labelPolishFlag.setPrefSize(resizeValues.getFlagSizes(), resizeValues.getFlagSizes());
+        radioButtonEnglish.setPadding(new Insets(0, 0, 0, resizeValues.getPadW30()));
+        labelEnglishFlag.setPrefSize(resizeValues.getFlagSizes(), resizeValues.getFlagSizes());
+        vBoxOptions001.setPadding(new Insets(resizeValues.getPadH50(), 0, 0, 0));
+        labelWindowSize.setPadding(new Insets(0, 0, 0, resizeValues.getPadW50()));
+        hBoxOptions0010.setPadding(new Insets(resizeValues.getPadH15(), 0, 0, resizeValues.getPadW100()));
+        comboBoxWindowSize.setPrefWidth(resizeValues.getPadW150());
+        comboBoxWindowSize.setStyle("-fx-font: " + (resizeValues.getFontSize() - 2) + "\"Bank Gothic Medium BT\";");
         comboBoxWindowSize.setCellFactory(new Callback<ListView<WindowSize>, ListCell<WindowSize>>() {
             @Override
             public ListCell<WindowSize> call(ListView<WindowSize> param) {
@@ -318,8 +307,8 @@ public class MainWindowController {
                     @Override
                     public void updateItem(WindowSize windowSize1, boolean empty) {
                         super.updateItem(windowSize1, empty);
-                        setPrefHeight(padH25);
-                        getListView().setPrefWidth(padW150);
+                        setPrefHeight(resizeValues.getPadH25());
+                        getListView().setPrefWidth(resizeValues.getPadW150());
                         if (!empty) {
                             setText(windowSize1.toString());
                         } else {
@@ -329,17 +318,17 @@ public class MainWindowController {
                 };
             }
         });
-        vBoxOptions01.setPadding(new Insets(padH50, 0, 0, padW50));
-        labelFAQ.setPadding(new Insets(0, 0, 0, padW50));
-        vBoxOptions010.setPadding(new Insets(0, 0, 0, padW100));
-        tableViewFAQ.setPrefSize(tableW, tableH);
-        tableColumnQuestions.setPrefWidth(tableW);
-        tableViewFAQ.setStyle("-fx-font: " + (fontSize - 2) + "\"Bank Gothic Medium BT\";");
-        vBoxOptions02.setSpacing(padH15);
-        vBoxOptions02.setPadding(new Insets(0, 0, padW50, 0));
-        buttonOptionsApply.setPrefSize(padW100 + padW30, padH30);
-        buttonOptionsOk.setPrefSize(padW100 + padW30, padH30);
-        buttonOptionsCancel.setPrefSize(padW100 + padW30, padH30);
+        vBoxOptions01.setPadding(new Insets(resizeValues.getPadH50(), 0, 0, resizeValues.getPadW50()));
+        labelFAQ.setPadding(new Insets(0, 0, 0, resizeValues.getPadW50()));
+        vBoxOptions010.setPadding(new Insets(0, 0, 0, resizeValues.getPadW100()));
+        tableViewFAQ.setPrefSize(resizeValues.getTableW(), resizeValues.getTableH());
+        tableColumnQuestions.setPrefWidth(resizeValues.getTableW());
+        tableViewFAQ.setStyle("-fx-font: " + (resizeValues.getFontSize() - 2) + "\"Bank Gothic Medium BT\";");
+        vBoxOptions02.setSpacing(resizeValues.getPadH15());
+        vBoxOptions02.setPadding(new Insets(0, 0, resizeValues.getPadW50(), 0));
+        buttonOptionsApply.setPrefSize(resizeValues.getPadW130(), resizeValues.getPadH30());
+        buttonOptionsOk.setPrefSize(resizeValues.getPadW130(), resizeValues.getPadH30());
+        buttonOptionsCancel.setPrefSize(resizeValues.getPadW130(), resizeValues.getPadH30());
     }
 
 

@@ -28,8 +28,7 @@ public class BasicAiming extends Mode {
             synchronized (arrayListCircles){
                 arrayListCircles.add(new Circle(30 + Math.abs(random.nextInt() % (canvasX - 60)),
                         30 + Math.abs(random.nextInt() % (canvasY - 60)),
-                        0, -1, new RadialGradient(0.63, 0.58, 0.7, 0.7,
-                        0.63, true, CycleMethod.NO_CYCLE, stops0)));
+                        0, -1, stops0));
             }
             totalCircles++;
             Platform.runLater(() -> playWindowController.getLabelResult1Value().setText("" + totalCircles));
